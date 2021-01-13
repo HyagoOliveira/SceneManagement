@@ -1,3 +1,16 @@
 {
-	"name": "ActionCode.SceneManagement.Runtime"
+    "name": "ActionCode.SceneManagement.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "GUID:35033a022112b114ba92fd560f7ddb17"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

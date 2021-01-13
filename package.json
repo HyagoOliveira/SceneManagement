@@ -9,7 +9,9 @@
     "Scenes"
   ],
   "category": "Scene",
-  "dependencies": {},
+  "dependencies": {
+    "com.actioncode.animation-parameters": "1.0.0"
+  },
   "license": "MIT",
   "homepage": "https://bitbucket.org/nostgameteam/scene-management#readme",
   "repository": {

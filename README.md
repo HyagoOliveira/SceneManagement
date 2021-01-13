@@ -12,6 +12,7 @@
 It's normal for most games to have multiple Scenes. A common case is to switch between these scenes in a pleasant way.
 
 This package contains a Scene Loader class which loads new Scenes using customized Screen Faders and Loading Scenes. 
+
 Also, the current loading scene progress can be shown by using a Text or Slider UI component.
 
 ![alt text][load-scene-showcase]
@@ -20,32 +21,32 @@ Also, the current loading scene progress can be shown by using a Text or Slider 
 
 ### Creating Scene Loading Settings
 
-You can use use any loading methods from [SceneManager](/Scripts/Loading/SceneManager.cs) class. This class is inheriting from the default Unity SceneManager so you can use any of its parent methods.
+You can use use any loading methods from [SceneManager](/Scripts/Loading/SceneManager.cs) class. This class is inheriting from the default Unity ```SceneManager``` so you can use any of its methods.
 
-Now, to load Scenes using a Screen Fader or Loading Scenes, you need to create a Scene Loading Settings asset. 
+Now, to load Scenes using a Screen Fader or Loading Scenes, you need to create a **Scene Loading Settings** asset. 
 
 Navigate to **Assets > Create > ActionCode > Scene Management > Scene Loading Settings** and create one.
 
 ![alt text][scene-loading-settings-inspector]
 
-Use this asset with any loading functions from ```SceneManager``` class (example bellow). 
+Fill this asset and use it with any loading functions from ```SceneManager``` class (example bellow). 
 
 ### Using Screen Faders
 
-Scene Loading Settings assets have an attribute for a Screen Fader Prefab. This prefab must have a component implementing the [AbstractScreenFader](/Scripts/Transitions/AbstractScreenFader.cs) class.
+Scene Loading Settings assets have an attribute for a **Screen Fader Prefab**. This prefab must have a component implementing the [AbstractScreenFader](/Scripts/Transitions/AbstractScreenFader.cs) component.
 
-The package provides two components implementing this class:
+This package provides two components implementing this class:
 
 1. [ScreenFaderAnimator](/Scripts/Transitions/ScreenFaderAnimator.cs): fades the screen in and out using a local ```Animator``` component.
 2. [ScreenFaderCanvas](/Scripts/Transitions/ScreenFaderCanvas.cs): fades the screen in and out using a local ```CanvasGroup``` component.
 
-If those components do not meet your specifications, you can create your own and put your logic to it.
+If those components do not meet your specifications, you can create your own component and put your logic there.
 
 Also, there is the [ScreenFaderCanvas](/Prefabs/ScreenFaderCanvas.prefab) prefab with the ```ScreenFaderCanvas``` component applied to it.
 
 ![alt text][screen-fader-canvas-prefab-inspector]
 
-You can use this prefab or create a prefab variant and change its fade color or duration for your liking.
+You can use this prefab or create a prefab variant and change its ```Image``` color (the fade color) or ```Duration```.
 
 ### Loading new Scenes
 
@@ -78,15 +79,19 @@ public sealed class SceneManagerTest : MonoBehaviour
 
 ![alt text][scene-manager-test-inspector]
 
-1. Use the [Scene](/Scripts/Attributes/SceneAttribute.cs) on a ```string``` or ```int``` attribute to display an Object Field for Scene assets.
+In this example, you can:
+
+1. Use the [Scene](/Scripts/Attributes/SceneAttribute.cs) attribute on a ```string``` or ```int``` field to display an Object Field for Scene assets.
 2. Make a reference for your **SceneLoadingSettings** asset and use it to loading new scenes using ```SceneManager.LoadScene``` functions.
 3. You can also just fades the screen without loading a new Scene using ```SceneManager.FadeScreen```. You may pass an action to it that will be executed when the screen fades out.
 
 ### Create Loading Scenes
 
-Inside your Loading Scene, you can use the (LoadingSlider)[/Scripts/Transitions/LoadingSlider.cs] and/or (LoadingText)[/Scripts/Transitions/LoadingText.cs] components to display the current loading progress.
+Inside your Loading Scene, you can use the [LoadingSlider](/Scripts/Transitions/LoadingSlider.cs) and/or [LoadingText](/Scripts/Transitions/LoadingText.cs) components to display the current loading progress.
 
 If you want to lock the next scene activation until an action is done, i.e., wait for an input or animation to be completely played inside your Loading Scene, you can set the ```SceneManager.LockNextScene``` property and do that.
+
+Finally, a [SceneLoadingBuilder](/Editor/Build/SceneLoadingBuilder.cs) *Pre Build Processor* was created to check if the **Loading Scene** from all SceneLoadingSettings assets has been add to the **Build Settings**.
 
 ## Installation
 

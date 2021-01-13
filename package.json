@@ -1,0 +1,23 @@
+{
+  "name": "com.actioncode.scene-management",
+  "displayName": "ActionCode-Scene Management",
+  "version": "0.1.0",
+  "unity": "2019.3",
+  "description": "This package loads new Scenes using Screen Faders and Loading Scenes.",
+  "keywords": [
+    "Loading",
+    "Scenes"
+  ],
+  "category": "Scene",
+  "dependencies": {},
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/nostgameteam/scene-management#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/nostgameteam/scene-management.git"
+  },
+  "author": {
+    "name": "Hyago Oliveira",
+    "email": "hyagogow@gmail.com"
+  }
+}

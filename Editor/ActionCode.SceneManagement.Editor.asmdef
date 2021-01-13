@@ -1,0 +1,18 @@
+{
+    "name": "ActionCode.SceneManagement.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f4dfeeb945ec1e4469e4acb166baa9b8"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

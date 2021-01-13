@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+- Internal SceneLoader component
 - SceneLoadingSettings ScriptableObject
 - Animation Parameters package 1.0.0 dependency
 - ScreenFaderCanvas Prefab

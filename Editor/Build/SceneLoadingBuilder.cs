@@ -32,11 +32,11 @@ namespace ActionCode.SceneManagement.Editor
                 var isInvalidScene = sceneIndex == -1;
                 if (isInvalidScene)
                 {
-                    var msg = $"Asset '{settings.name}' has the Loading Scene '{settings.loadingScene}' that " +
-                        $"was not add to the build settings.\n" +
-                        $"To add a scene to the build settings use the menu File->Build Settings...";
-                    // this will stop the build.
-                    throw new BuildFailedException(msg);
+                    var assetPath = AssetDatabase.GetAssetPath(settings);
+                    var msg = $"Asset '{assetPath}' has the Loading Scene '{settings.loadingScene}' which " +
+                        $"was not add to the Build Settings. This Loading Scene cannot be loaded at runtime.\n" +
+                        $"To add this scene to the Build Settings use the menu File > Build Settings.";
+                    UnityEngine.Debug.LogWarning(msg);
                 }
             }
         }

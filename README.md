@@ -2,7 +2,7 @@
 
 * Loads new Scenes using Screen Faders and Loading Scenes
 * Unity minimum version: **2019.3**
-* Current version: **1.0.0**
+* Current version: **1.0.1**
 * License: **MIT**
 * Dependencies:
 	- [Animation Parameters 1.0.0](https://bitbucket.org/nostgameteam/animation-parameters/src/1.0.0/)

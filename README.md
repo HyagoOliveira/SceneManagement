@@ -1,48 +1,48 @@
 # Scene Management
 
-* Loads new Scenes using Screen Faders and Loading Scenes
+* Loads new Scenes using Screen Faders and Loading Scenes.
 * Unity minimum version: **2019.3**
 * Current version: **1.0.1**
 * License: **MIT**
 * Dependencies:
-	- [Animation Parameters 1.0.0](https://bitbucket.org/nostgameteam/animation-parameters/src/1.0.0/)
+    - [Animation Parameters 1.0.0](https://bitbucket.org/nostgameteam/animation-parameters/src/1.0.0/)
 
 ## Summary
 
-It's normal for most games to have multiple Scenes. A common case is to switch between these scenes in a pleasant way.
+It's normal for most games to have multiple Scenes. A common user case is to switch between them in a nice way.
 
-This package contains a Scene Loader class which loads new Scenes using customized Screen Faders and Loading Scenes. 
+This package contains a Scene Loader class which loads new Scenes using customized Screen Faders and Loading Scenes (Scenes created just to show loading progress). 
 
-Also, the current loading scene progress can be shown by using a Text or Slider UI component.
+Also, the current loading scene progress can be shown using a ```Text``` or ```Slider``` UI component.
 
 ![alt text][load-scene-showcase]
 
 ## How To Use
 
-### Creating Scene Loading Settings
+### Creating a Scene Loading Settings
 
-You can use use any loading methods from [SceneManager](/Scripts/Loading/SceneManager.cs) class. This class is inheriting from the default Unity ```SceneManager``` so you can use any of its methods.
+You can use any loading methods from the static [SceneManager](/Scripts/Loading/SceneManager.cs) class. This class is inheriting from the default Unity ```SceneManager``` so you can use any of its methods as well.
 
-Now, to load Scenes using a Screen Fader or Loading Scenes, you need to create a **Scene Loading Settings** asset. 
+Now, to load Scenes using this new class you'll need to create a **Scene Loading Settings** asset (a ```ScriptableObject```).
 
 Navigate to **Assets > Create > ActionCode > Scene Management > Scene Loading Settings** and create one.
 
 ![alt text][scene-loading-settings-inspector]
 
-Fill this asset and use it with any loading functions from ```SceneManager``` class (example bellow). 
+Fill this asset and use it with any loading functions from ```SceneManager``` class (available example bellow). 
 
 ### Using Screen Faders
 
 Scene Loading Settings assets have an attribute for a **Screen Fader Prefab**. This prefab must have a component implementing the [AbstractScreenFader](/Scripts/Transitions/AbstractScreenFader.cs) component.
 
-This package provides two components implementing this class:
+This package provides two components implementing this component:
 
-1. [ScreenFaderAnimator](/Scripts/Transitions/ScreenFaderAnimator.cs): fades the screen in and out using a local ```Animator``` component.
-2. [ScreenFaderCanvas](/Scripts/Transitions/ScreenFaderCanvas.cs): fades the screen in and out using a local ```CanvasGroup``` component.
+1. [ScreenFaderAnimator](/Scripts/Transitions/ScreenFaderAnimator.cs): fades the screen in and out using a local ```Animator``` component. Perfect to use when fading using animations.
+2. [ScreenFaderCanvas](/Scripts/Transitions/ScreenFaderCanvas.cs): fades the screen in and out using a local ```CanvasGroup``` component. Use this script and set the attributes to choose how to fade a ```Canvas```.
 
-If those components do not meet your specifications, you can create your own component and put your logic there.
+If those components do not meet your specifications, please feel free to create your own fade component and contribute to the package. :)
 
-Also, there is the [ScreenFaderCanvas](/Prefabs/ScreenFaderCanvas.prefab) prefab with the ```ScreenFaderCanvas``` component applied to it.
+Also, there is the [ScreenFaderCanvas](/Prefabs/ScreenFaderCanvas.prefab) prefab with the ```ScreenFaderCanvas``` component already applied to it.
 
 ![alt text][screen-fader-canvas-prefab-inspector]
 
@@ -50,7 +50,7 @@ You can use this prefab or create a prefab variant and change its ```Image``` co
 
 ### Loading new Scenes
 
-The example bellow shows how to load new scenes using Scene Loading Settings:
+The example bellow shows how to load new scenes using Scene Loading Settings asset:
 
 ```csharp
 using UnityEngine;
@@ -82,8 +82,8 @@ public sealed class SceneManagerTest : MonoBehaviour
 In this example, you can:
 
 1. Use the [Scene](/Scripts/Attributes/SceneAttribute.cs) attribute on a ```string``` or ```int``` field to display an Object Field for Scene assets.
-2. Make a reference for your **SceneLoadingSettings** asset and use it to loading new scenes using ```SceneManager.LoadScene``` functions.
-3. You can also just fades the screen without loading a new Scene using ```SceneManager.FadeScreen```. You may pass an action to it that will be executed when the screen fades out.
+2. Make a reference for your **SceneLoadingSettings** asset and use it to loading new scenes using ```SceneManager.LoadScene()``` functions.
+3. You can also just fades the screen without loading a new Scene using ```SceneManager.FadeScreen```. You may pass an action to it and it'll be executed when the screen fades out.
 
 ### Create Loading Scenes
 
@@ -91,7 +91,7 @@ Inside your Loading Scene, you can use the [LoadingSlider](/Scripts/Transitions/
 
 If you want to lock the next scene activation until an action is done, i.e., wait for an input or animation to be completely played inside your Loading Scene, you can set the ```SceneManager.LockNextScene``` property and do that.
 
-Finally, a [SceneLoadingBuilder](/Editor/Build/SceneLoadingBuilder.cs) *Pre Build Processor* was created to check if the **Loading Scene** from all SceneLoadingSettings assets has been add to the **Build Settings**.
+Finally, a [SceneLoadingBuilder](/Editor/Build/SceneLoadingBuilder.cs) *Pre Build Processor* was created to check if the **Loading Scene** from all SceneLoadingSettings assets has been add to the **Build Settings**. This make sure that you will never waste your time building your game to realize that you forget to add a particular Scene to the build.
 
 ## Installation
 

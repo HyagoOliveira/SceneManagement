@@ -9,21 +9,19 @@ namespace ActionCode.SceneManagement
     /// </summary>
     public sealed class SceneManagerSettings : ScriptableObject, ISceneManager
     {
-        [Min(0F), Tooltip("Time (in seconds) to wait before starts the loading process.")]
-        public float timeBeforeLoading = 0F;
-        [Min(0F), Tooltip("Time (in seconds) to wait after the loading process has finished.")]
-        public float timeAfterLoading = 0F;
-        [Scene, Tooltip("The Loading Scene.")]
-        public string loadingScene;
-        [Tooltip("The Prefab containing an instance of AbstractScreenFader. It'll be instantiated at runtime.")]
-        public AbstractScreenFader screenFader;
+        [SerializeField, Min(0F), Tooltip("Time (in seconds) to wait before starts the loading process.")]
+        private float timeBeforeLoading = 0F;
+        [SerializeField, Min(0F), Tooltip("Time (in seconds) to wait after the loading process has finished.")]
+        private float timeAfterLoading = 0F;
+        [SerializeField, Scene, Tooltip("The Loading Scene.")]
+        private string loadingScene;
+        [SerializeField, Tooltip("The Prefab containing an instance of AbstractScreenFader. It'll be instantiated at runtime.")]
+        private AbstractScreenFader screenFader;
+
+        public string LoadingScene => loadingScene;
 
         private IScreenFader fader;
 
-        /// <summary>
-        /// Checks if <see cref="loadingScene"/> was set.
-        /// </summary>
-        /// <returns>Whether <see cref="loadingScene"/> was set.</returns>
         public bool HasLoadingScene() => !string.IsNullOrEmpty(loadingScene);
 
         public async Task LoadScene(string scene)
@@ -42,8 +40,10 @@ namespace ActionCode.SceneManagement
 
         private void CheckScreenFaderInstance()
         {
-            var fader = FindObjectOfType<AbstractScreenFader>(includeInactive: true);
-            if (fader) return;
+            if (fader != null) return;
+
+            fader = FindObjectOfType<AbstractScreenFader>(includeInactive: true);
+            if (fader != null) return;
 
             if (screenFader == null)
             {

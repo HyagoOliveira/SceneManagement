@@ -28,15 +28,15 @@ namespace ActionCode.SceneManagement.Editor
             {
                 if (!settings.HasLoadingScene()) continue;
 
-                var sceneIndex = SceneUtility.GetBuildIndexByScenePath(settings.loadingScene);
+                var sceneIndex = SceneUtility.GetBuildIndexByScenePath(settings.LoadingScene);
                 var isInvalidScene = sceneIndex == -1;
                 if (isInvalidScene)
                 {
                     var assetPath = AssetDatabase.GetAssetPath(settings);
-                    var msg = $"Asset '{assetPath}' has the Loading Scene '{settings.loadingScene}' which " +
+                    var error = $"Asset '{assetPath}' has the Loading Scene '{settings.LoadingScene}' which " +
                         $"was not add to the Build Settings. This Loading Scene cannot be loaded at runtime.\n" +
                         $"To add this scene to the Build Settings use the menu File > Build Settings.";
-                    UnityEngine.Debug.LogWarning(msg);
+                    throw new BuildFailedException(error);
                 }
             }
         }

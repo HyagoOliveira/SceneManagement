@@ -19,11 +19,11 @@ Also, the current loading scene progress can be shown using a ```Text``` or ```S
 
 ## How To Use
 
-### Creating a Scene Loading Settings
+### Creating a Scene Manager Settings
 
-Open the **Project Settings** Windows and select Scene Loading (below ActionCode group).
+Open the **Project Settings** Windows and select Scene Manager (below ActionCode group).
 
-Click on the **Create** button and save a new Scene Loading Settings asset.
+Click on the **Create** button and save a new Scene Manager Settings asset.
 
 You can use any loading methods from the static [SceneManager](/Runtime/Loading/SceneManager.cs) class. This class is inheriting from the default Unity ```SceneManager``` so you can use any of its methods as well.
 
@@ -33,12 +33,12 @@ Fill this asset and use it with any loading functions from ```SceneManager``` cl
 
 ### Using Screen Faders
 
-Scene Loading Settings assets have an attribute for a **Screen Fader Prefab**. This prefab must have a component implementing the [AbstractScreenFader](/Runtime/Transitions/AbstractScreenFader.cs) component.
+Scene Manager Settings assets have an attribute for a **Screen Fader**. This prefab must have a component implementing the [AbstractScreenFader](/Runtime/ScreenFaders/AbstractScreenFader.cs) component.
 
 This package provides two components implementing this component:
 
-1. [ScreenFaderAnimator](/Runtime/Transitions/ScreenFaderAnimator.cs): fades the screen in and out using a local ```Animator``` component. Perfect to use when fading using animations.
-2. [ScreenFaderCanvas](/Runtime/Transitions/ScreenFaderCanvas.cs): fades the screen in and out using a local ```CanvasGroup``` component. Use this script and set the attributes to choose how to fade a ```Canvas```.
+1. [ScreenFaderAnimator](/Runtime/ScreenFaders/ScreenFaderAnimator.cs): fades the screen in and out using a local ```Animator``` component. Perfect to use when fading using animations.
+2. [ScreenFaderCanvas](/Runtime/ScreenFaders/ScreenFaderCanvas.cs): fades the screen in and out using a local ```CanvasGroup``` component. Use this script and set the attributes to choose how to fade a ```Canvas```.
 
 If those components do not meet your specifications, please feel free to create your own fade component and contribute to the package. :)
 

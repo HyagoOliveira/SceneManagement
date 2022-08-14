@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 namespace ActionCode.SceneManagement.Editor
 {
     /// <summary>
-    /// Checks if the Loading Scene from all <see cref="SceneLoadingSettings"/> has been add to the build./>
+    /// Checks if the Loading Scene from all <see cref="SceneManagerSettings"/> has been add to the build./>
     /// </summary>
     public sealed class SceneLoadingBuilder : IPreprocessBuildWithReport
     {
@@ -22,7 +22,7 @@ namespace ActionCode.SceneManagement.Editor
             }
         }
 
-        private static void CheckLoadingScenes(SceneLoadingSettings[] projectSettings)
+        private static void CheckLoadingScenes(SceneManagerSettings[] projectSettings)
         {
             foreach (var settings in projectSettings)
             {
@@ -41,16 +41,16 @@ namespace ActionCode.SceneManagement.Editor
             }
         }
 
-        private static SceneLoadingSettings[] FindAllSceneLoaderSettings()
+        private static SceneManagerSettings[] FindAllSceneLoaderSettings()
         {
-            var filter = $"t:{typeof(SceneLoadingSettings).Name}";
+            var filter = $"t:{typeof(SceneManagerSettings).Name}";
             var guids = AssetDatabase.FindAssets(filter);
-            var settings = new SceneLoadingSettings[guids.Length];
+            var settings = new SceneManagerSettings[guids.Length];
 
             for (int i = 0; i < guids.Length; i++)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guids[i]);
-                settings[i] = AssetDatabase.LoadAssetAtPath<SceneLoadingSettings>(path);
+                settings[i] = AssetDatabase.LoadAssetAtPath<SceneManagerSettings>(path);
             }
 
             return settings;

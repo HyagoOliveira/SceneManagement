@@ -22,7 +22,7 @@ namespace ActionCode.SceneManagement
 
         private void Update()
         {
-            slider.value = SceneManager.LoadingProgress;
+            //slider.value = SceneManager.LoadingProgress;
         }
     }
 }

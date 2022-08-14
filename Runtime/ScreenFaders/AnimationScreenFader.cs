@@ -12,7 +12,9 @@ namespace ActionCode.SceneManagement
     public sealed class AnimationScreenFader : AbstractScreenFader
     {
         [SerializeField, Tooltip("The local Animation component.")]
-        private new Animation animation;
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+        private Animation animation;
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
         [SerializeField, Tooltip("The local animation name used to fades the screen in.")]
         private string fadeInName = "AnimationScreenFader@FadeIn";
         [SerializeField, Tooltip("The local animation name used to fades the screen out.")]

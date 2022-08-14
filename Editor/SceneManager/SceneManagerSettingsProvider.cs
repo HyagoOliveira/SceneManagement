@@ -3,11 +3,11 @@ using ActionCode.ScriptableSettingsProvider.Editor;
 
 namespace ActionCode.SceneManagement.Editor
 {
-    public sealed class SceneLoadingSettingsProvider :
-        AbstractScriptableSettingsProvider<SceneLoadingSettings>
+    public sealed class SceneManagerSettingsProvider :
+        AbstractScriptableSettingsProvider<SceneManagerSettings>
     {
-        public SceneLoadingSettingsProvider() :
-            base("ActionCode/Scene Loading")
+        public SceneManagerSettingsProvider() :
+            base("ActionCode/Scene Manager")
         { }
 
         protected override string GetConfigName() =>
@@ -15,6 +15,6 @@ namespace ActionCode.SceneManagement.Editor
 
         [SettingsProvider]
         private static SettingsProvider CreateProjectSettingsMenu() =>
-            new SceneLoadingSettingsProvider();
+            new SceneManagerSettingsProvider();
     }
 }

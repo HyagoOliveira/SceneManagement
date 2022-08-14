@@ -22,7 +22,7 @@ namespace ActionCode.SceneManagement
 
         private void Update()
         {
-            text.text = string.Format(TEXT_FORMAT, SceneManager.LoadingProgressPercentage);
+            //text.text = string.Format(TEXT_FORMAT, SceneManager.LoadingProgressPercentage);
         }
     }
 }

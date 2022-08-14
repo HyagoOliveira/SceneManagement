@@ -1,6 +1,6 @@
 {
-    "name": "ActionCode.SceneManagement.Runtime",
-    "rootNamespace": "",
+    "name": "ActionCode.SceneManagement",
+    "rootNamespace": "ActionCode.SceneManagement",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

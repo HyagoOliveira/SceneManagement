@@ -20,7 +20,7 @@ Also, the current loading scene progress can be shown using a ```Text``` or ```S
 
 ### Creating a Scene Loading Settings
 
-You can use any loading methods from the static [SceneManager](/Scripts/Loading/SceneManager.cs) class. This class is inheriting from the default Unity ```SceneManager``` so you can use any of its methods as well.
+You can use any loading methods from the static [SceneManager](/Runtime/Loading/SceneManager.cs) class. This class is inheriting from the default Unity ```SceneManager``` so you can use any of its methods as well.
 
 Now, to load Scenes using this new class you'll need to create a **Scene Loading Settings** asset (a ```ScriptableObject```).
 
@@ -32,12 +32,12 @@ Fill this asset and use it with any loading functions from ```SceneManager``` cl
 
 ### Using Screen Faders
 
-Scene Loading Settings assets have an attribute for a **Screen Fader Prefab**. This prefab must have a component implementing the [AbstractScreenFader](/Scripts/Transitions/AbstractScreenFader.cs) component.
+Scene Loading Settings assets have an attribute for a **Screen Fader Prefab**. This prefab must have a component implementing the [AbstractScreenFader](/Runtime/Transitions/AbstractScreenFader.cs) component.
 
 This package provides two components implementing this component:
 
-1. [ScreenFaderAnimator](/Scripts/Transitions/ScreenFaderAnimator.cs): fades the screen in and out using a local ```Animator``` component. Perfect to use when fading using animations.
-2. [ScreenFaderCanvas](/Scripts/Transitions/ScreenFaderCanvas.cs): fades the screen in and out using a local ```CanvasGroup``` component. Use this script and set the attributes to choose how to fade a ```Canvas```.
+1. [ScreenFaderAnimator](/Runtime/Transitions/ScreenFaderAnimator.cs): fades the screen in and out using a local ```Animator``` component. Perfect to use when fading using animations.
+2. [ScreenFaderCanvas](/Runtime/Transitions/ScreenFaderCanvas.cs): fades the screen in and out using a local ```CanvasGroup``` component. Use this script and set the attributes to choose how to fade a ```Canvas```.
 
 If those components do not meet your specifications, please feel free to create your own fade component and contribute to the package. :)
 
@@ -80,13 +80,13 @@ public sealed class SceneManagerTest : MonoBehaviour
 
 In this example, you can:
 
-1. Use the [Scene](/Scripts/Attributes/SceneAttribute.cs) attribute on a ```string``` or ```int``` field to display an Object Field for Scene assets.
+1. Use the [Scene](/Runtime/Attributes/SceneAttribute.cs) attribute on a ```string``` or ```int``` field to display an Object Field for Scene assets.
 2. Make a reference for your **SceneLoadingSettings** asset and use it to loading new scenes using ```SceneManager.LoadScene()``` functions.
 3. You can also just fades the screen without loading a new Scene using ```SceneManager.FadeScreen```. You may pass an action to it and it'll be executed when the screen fades out.
 
 ### Create Loading Scenes
 
-Inside your Loading Scene, you can use the [LoadingSlider](/Scripts/Transitions/LoadingSlider.cs) and/or [LoadingText](/Scripts/Transitions/LoadingText.cs) components to display the current loading progress.
+Inside your Loading Scene, you can use the [LoadingSlider](/Runtime/Transitions/LoadingSlider.cs) and/or [LoadingText](/Runtime/Transitions/LoadingText.cs) components to display the current loading progress.
 
 If you want to lock the next scene activation until an action is done, i.e., wait for an input or animation to be completely played inside your Loading Scene, you can set the ```SceneManager.LockNextScene``` property and do that.
 

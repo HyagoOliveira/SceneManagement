@@ -96,24 +96,27 @@ Finally, a [SceneLoadingBuilder](/Editor/Build/SceneLoadingBuilder.cs) *Pre Buil
 
 ### Using the Package Registry Server
 
-Follow the instructions inside [here](https://cutt.ly/ukvj1c8) and the package **ActionCode-Scene Management** will be available for you to install using the **Package Manager** windows.
+Follow the instructions inside [here](https://cutt.ly/ukvj1c8) and the package **ActionCode-Scene Management** 
+will be available for you to install using the **Package Manager** windows.
 
 ### Using the Git URL
 
 You will need a **Git client** installed on your computer with the Path variable already set. 
 
-Use the **Package Manager** "Add package from git URL..." feature or add manually this line inside `dependencies` attribute: 
+- Use the **Package Manager** "Add package from git URL..." feature and paste this URL: `https://github.com/HyagoOliveira/SceneManagement.git`
+
+- You can also manually modify you `Packages/manifest.json` file and add this line inside `dependencies` attribute: 
 
 ```json
-"com.actioncode.scene-management":"https://bitbucket.org/nostgameteam/scene-management.git"
+"com.actioncode.scene-management":"https://github.com/HyagoOliveira/SceneManagement.git"
 ```
-
 ---
 
 **Hyago Oliveira**
 
+[GitHub](https://github.com/HyagoOliveira) -
 [BitBucket](https://bitbucket.org/HyagoGow/) -
-[Unity Connect](https://connect.unity.com/u/hyago-oliveira) -
+[LinkedIn](https://www.linkedin.com/in/hyago-oliveira/) -
 <hyagogow@gmail.com>
 
 [load-scene-showcase]: /Documentation~/load-scene-showcase.gif "Loading Scenes"

@@ -29,6 +29,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - README
 - Initial commit
 
-[Unreleased]: https://bitbucket.org/nostgameteam/scene-management/branches/compare/master%0D1.0.1
-[1.0.1]: https://bitbucket.org/nostgameteam/scene-management/src/1.0.1/
-[1.0.0]: https://bitbucket.org/nostgameteam/scene-management/src/1.0.0/
+[Unreleased]: https://github.com/HyagoOliveira/SceneManagement/compare/1.0.1...main
+[1.0.1]: https://github.com/HyagoOliveira/SceneManagement/tree/1.0.1/
+[1.0.0]: https://github.com/HyagoOliveira/SceneManagement/tree/1.0.0/

@@ -10,14 +10,15 @@
   ],
   "category": "Scene",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/nostgameteam/scene-management#readme",
+  "homepage": "https://github.com/HyagoOliveira/SceneManagement#readme",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/nostgameteam/scene-management.git"
+    "url": "https://github.com/HyagoOliveira/SceneManagement.git"
   },
+  "documentationUrl": "https://github.com/HyagoOliveira/SceneManagement#readme",
+  "changelogUrl": "https://github.com/HyagoOliveira/SceneManagement/CHANGELOG.md",
   "author": {
     "name": "Hyago Oliveira",
     "email": "hyagogow@gmail.com"
-  },
-  "hideInEditor": false
+  }
 }

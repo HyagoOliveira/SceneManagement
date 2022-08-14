@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Scene Loading Setting asset uses Scriptable Settings Provider
+- Replace ScreenFaderCanvas -> ScreenFaderCanvas
 
 ### Removed
 - Animation Parameters package

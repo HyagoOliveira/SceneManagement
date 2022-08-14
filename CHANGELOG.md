@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Removed
 - Animation Parameters package
+- ScreenFaderAnimator component
 
 ## [1.0.1] - 2021-01-14
 ### Changed

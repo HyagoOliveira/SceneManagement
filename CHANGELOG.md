@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - Scriptable Settings Provider package 1.0.0
+- AnimationScreenFader component
 
 ### Changed
 - Scene Loading Setting asset uses Scriptable Settings Provider

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Removed
 - Animation Parameters package
 - ScreenFaderAnimator component
+- Static SceneManager class
 
 ## [1.0.1] - 2021-01-14
 ### Changed

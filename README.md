@@ -5,7 +5,6 @@
 * Current version: **1.0.1**
 * License: **MIT**
 * Dependencies:
-    - [Animation Parameters 1.0.0](https://bitbucket.org/nostgameteam/animation-parameters/src/1.0.0/)
 
 ## Summary
 

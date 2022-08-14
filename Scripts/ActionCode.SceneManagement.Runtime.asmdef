@@ -1,9 +1,7 @@
 {
     "name": "ActionCode.SceneManagement.Runtime",
     "rootNamespace": "",
-    "references": [
-        "GUID:35033a022112b114ba92fd560f7ddb17"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

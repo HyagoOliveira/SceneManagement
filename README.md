@@ -21,11 +21,11 @@ Also, the current loading scene progress can be shown using a ```Text``` or ```S
 
 ### Creating a Scene Loading Settings
 
+Open the **Project Settings** Windows and select Scene Loading (below ActionCode group).
+
+Click on the **Create** button and save a new Scene Loading Settings asset.
+
 You can use any loading methods from the static [SceneManager](/Runtime/Loading/SceneManager.cs) class. This class is inheriting from the default Unity ```SceneManager``` so you can use any of its methods as well.
-
-Now, to load Scenes using this new class you'll need to create a **Scene Loading Settings** asset (a ```ScriptableObject```).
-
-Navigate to **Assets > Create > ActionCode > Scene Management > Scene Loading Settings** and create one.
 
 ![alt text][scene-loading-settings-inspector]
 

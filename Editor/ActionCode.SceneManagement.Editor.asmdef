@@ -1,8 +1,9 @@
 {
     "name": "ActionCode.SceneManagement.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "ActionCode.SceneManagement.Editor",
     "references": [
-        "GUID:f4dfeeb945ec1e4469e4acb166baa9b8"
+        "GUID:f4dfeeb945ec1e4469e4acb166baa9b8",
+        "GUID:f2da4fc876b4b498abf75ecbaaa1ca25"
     ],
     "includePlatforms": [
         "Editor"

@@ -1,7 +1,7 @@
 #if UI_MODULE
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading.Tasks;
+using System.Collections;
 
 namespace ActionCode.SceneManagement
 {
@@ -37,10 +37,10 @@ namespace ActionCode.SceneManagement
             canvasGroup = GetComponent<CanvasGroup>();
         }
 
-        public override async Task FadeIn() => await FadeScreen(FADE_OUT_ALPHA, FADE_IN_ALPHA);
-        public override async Task FadeOut() => await FadeScreen(FADE_IN_ALPHA, FADE_OUT_ALPHA);
+        public override IEnumerator FadeIn() => FadeScreen(FADE_OUT_ALPHA, FADE_IN_ALPHA);
+        public override IEnumerator FadeOut() => FadeScreen(FADE_IN_ALPHA, FADE_OUT_ALPHA);
 
-        private async Task FadeScreen(float startAlpha, float finalAlpha)
+        private IEnumerator FadeScreen(float startAlpha, float finalAlpha)
         {
             var currentFadeTime = 0F;
             while (currentFadeTime < duration)
@@ -48,7 +48,7 @@ namespace ActionCode.SceneManagement
                 var interpolation = currentFadeTime / duration;
                 canvasGroup.alpha = Mathf.Lerp(startAlpha, finalAlpha, interpolation);
                 currentFadeTime += Time.unscaledDeltaTime;
-                await Task.Yield();
+                yield return null;
             }
             canvasGroup.alpha = finalAlpha;
         }

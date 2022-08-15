@@ -1,6 +1,6 @@
 #if ANIMATION_MODULE
 using UnityEngine;
-using System.Threading.Tasks;
+using System.Collections;
 
 namespace ActionCode.SceneManagement
 {
@@ -26,22 +26,22 @@ namespace ActionCode.SceneManagement
             animation.playAutomatically = false;
         }
 
-        public override async Task FadeIn()
+        public override IEnumerator FadeIn()
         {
             animation.Play(fadeInName);
-            await WaitWhilePlaying(animation);
+            yield return WaitWhilePlaying(animation);
         }
 
-        public override async Task FadeOut()
+        public override IEnumerator FadeOut()
         {
             animation.Play(fadeOutName);
-            await WaitWhilePlaying(animation);
+            yield return WaitWhilePlaying(animation);
         }
 
-        private static async Task WaitWhilePlaying(Animation animation)
+        private static IEnumerator WaitWhilePlaying(Animation animation)
         {
             while (animation.isPlaying)
-                await Task.Yield();
+                yield return null;
         }
     }
 }

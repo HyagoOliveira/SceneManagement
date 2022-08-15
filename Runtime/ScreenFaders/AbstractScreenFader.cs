@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Threading.Tasks;
+using System.Collections;
 
 namespace ActionCode.SceneManagement
 {
@@ -13,12 +13,12 @@ namespace ActionCode.SceneManagement
         /// Fades the screen in (the content will appear).
         /// </summary>
         /// <returns>An operation that will be completed when all screen content appears.</returns>
-        public abstract Task FadeIn();
+        public abstract IEnumerator FadeIn();
 
         /// <summary>
         /// Fades the screen out (the content will disappear).
         /// </summary>
         /// <returns>An operation that will be completed when all screen content disappears.</returns>
-        public abstract Task FadeOut();
+        public abstract IEnumerator FadeOut();
     }
 }

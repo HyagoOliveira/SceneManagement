@@ -28,18 +28,11 @@ namespace ActionCode.SceneManagement
         private bool isLoading;
         private SceneManagerBehaviour behaviour;
 
-        public void Awake()
-        {
-            // ScriptableObject.Awake() functions are only called when the game is launched on Builds.
-            // SceneManagerSettingsProvider.AwakeSettings() will force to call this function
-            // when entering in Play Mode using the Editor.
-            if (Application.isPlaying) CheckInstances();
-        }
-
         public bool HasLoadingScene() => !string.IsNullOrEmpty(loadingScene);
 
         public async Task LoadScene(string scene)
         {
+            CheckInstances();
             behaviour.StartCoroutine(LoadSceneCoroutine(scene));
 
             while (isLoading)

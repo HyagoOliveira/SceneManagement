@@ -22,16 +22,23 @@ namespace ActionCode.SceneManagement
         public event Action<float> OnProgressChanged;
 
         public string LoadingScene => loadingScene;
+        public IScreenFader Fader { get; private set; }
 
-        private IScreenFader fader;
         private readonly ITask task = TaskFactory.Create();
+
+        public void Awake()
+        {
+            // ScriptableObject.Awake() functions are only called when the game is launched on Builds.
+            // SceneManagerSettingsProvider.AwakeSettings() will force to call this function
+            // when entering in Play Mode using the Editor.
+            CheckFaderInstance();
+        }
 
         public bool HasLoadingScene() => !string.IsNullOrEmpty(loadingScene);
 
         public async Task LoadScene(string scene)
         {
-            CheckScreenFaderInstance();
-            await fader?.FadeOut();
+            await Fader?.FadeOut();
 
             IProgress<float> progress = new Progress<float>(ReportProgress);
 
@@ -41,7 +48,7 @@ namespace ActionCode.SceneManagement
                 await loadingSceneOperation.WaitUntilSingleSceneLoad();
 
                 progress.Report(0F);
-                await fader?.FadeIn();
+                await Fader?.FadeIn();
             }
 
             await task.Delay(timeBeforeLoading);
@@ -54,30 +61,34 @@ namespace ActionCode.SceneManagement
             progress.Report(1F);
             await task.Delay(timeAfterLoading);
 
-            if (HasLoadingScene()) await fader?.FadeOut();
+            if (HasLoadingScene()) await Fader?.FadeOut();
             loading.allowSceneActivation = true;
-            await fader?.FadeIn();
+            await Fader?.FadeIn();
         }
 
         private void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);
 
-        private void CheckScreenFaderInstance()
+        private void CheckFaderInstance()
         {
-            if (fader != null) return;
-
-            fader = FindObjectOfType<AbstractScreenFader>(includeInactive: true);
-            if (fader != null) return;
+            var abstractFader = FindObjectOfType<AbstractScreenFader>(includeInactive: true);
+            if (abstractFader != null)
+            {
+                Fader = abstractFader;
+                DontDestroyOnLoad(abstractFader.gameObject);
+                return;
+            }
 
             if (screenFader == null)
             {
-                Debug.Log("No Screen Fader Prefab set.");
+                Debug.LogWarning("No Screen Fader Prefab set. " +
+                    "Set one in Project Settings > ActionCode > Scene Manager.");
                 return;
             }
 
             var prefab = screenFader.gameObject;
             var gameObject = Instantiate(prefab);
 
-            fader = gameObject.GetComponent<AbstractScreenFader>(); ;
+            Fader = gameObject.GetComponent<AbstractScreenFader>(); ;
             gameObject.name = prefab.name;
 
             DontDestroyOnLoad(gameObject);

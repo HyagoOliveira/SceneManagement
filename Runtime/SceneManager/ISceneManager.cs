@@ -20,6 +20,11 @@ namespace ActionCode.SceneManagement
         string LoadingScene { get; }
 
         /// <summary>
+        /// The Screen Fader used to fade the screen in/out before change Scenes.
+        /// </summary>
+        IScreenFader Fader { get; }
+
+        /// <summary>
         /// Checks if a Loading Scene was set.
         /// </summary>
         /// <returns>True if a Loading Scene was set. False otherwise.</returns>

@@ -8,5 +8,11 @@ namespace ActionCode.SceneManagement
     [DisallowMultipleComponent]
     internal sealed class SceneManagerBehaviour : MonoBehaviour
     {
+        internal SceneManagerSettings Settings { get; set; }
+
+        private void OnDestroy()
+        {
+            if (Settings) Settings.Dispose();
+        }
     }
 }

@@ -30,23 +30,25 @@ namespace ActionCode.SceneManagement
 
         public bool HasLoadingScene() => !string.IsNullOrEmpty(loadingScene);
 
-        public async Task LoadScene(string scene)
+        public async Task LoadScene(string scene, bool showLoadingScene = true)
         {
             CheckInstances();
             if (isLoading) throw new Exception($"Cannot load {scene} since other scene is being loaded.");
 
-            behaviour.StartCoroutine(LoadSceneCoroutine(scene));
+            showLoadingScene &= HasLoadingScene();
+
+            behaviour.StartCoroutine(LoadSceneCoroutine(scene, showLoadingScene));
             while (isLoading) await Task.Yield();
         }
 
-        private IEnumerator LoadSceneCoroutine(string scene)
+        private IEnumerator LoadSceneCoroutine(string scene, bool showLoadingScene)
         {
             isLoading = true;
 
             yield return FadeScreenOut();
             IProgress<float> progress = new Progress<float>(ReportProgress);
 
-            if (HasLoadingScene())
+            if (showLoadingScene)
             {
                 // will automatically unload the previous Scene.
                 var loadingSceneOperation = SceneManager.LoadSceneAsync(loadingScene, LoadSceneMode.Single);
@@ -67,7 +69,7 @@ namespace ActionCode.SceneManagement
             progress.Report(1F);
             yield return new WaitForSeconds(timeAfterLoading);
 
-            if (HasLoadingScene()) yield return FadeScreenOut();
+            if (showLoadingScene) yield return FadeScreenOut();
 
             // will automatically unload the Loading Scene.
             loadingOperation.allowSceneActivation = true;
@@ -91,6 +93,7 @@ namespace ActionCode.SceneManagement
         {
             if (behaviour) return;
             behaviour = GetOrStaticCreate<SceneManagerBehaviour>("SceneManager");
+            behaviour.Settings = this;
         }
 
         private void CheckFaderInstance()
@@ -135,6 +138,13 @@ namespace ActionCode.SceneManagement
             DontDestroyOnLoad(gameObject);
 
             return gameObject.GetComponent<T>();
+        }
+
+        internal void Dispose()
+        {
+            Fader = null;
+            behaviour = null;
+            isLoading = false;
         }
     }
 }

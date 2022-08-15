@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace ActionCode.SceneManagement
@@ -21,6 +21,7 @@ namespace ActionCode.SceneManagement
         public string LoadingScene => loadingScene;
 
         private IScreenFader fader;
+        private readonly ITask task = TaskFactory.Create();
 
         public bool HasLoadingScene() => !string.IsNullOrEmpty(loadingScene);
 
@@ -29,11 +30,23 @@ namespace ActionCode.SceneManagement
             CheckScreenFaderInstance();
             await fader?.FadeOut();
 
+            if (HasLoadingScene())
+            {
+                var loadingSceneOperation = SceneManager.LoadSceneAsync(loadingScene, LoadSceneMode.Single);
+                await loadingSceneOperation.WaitUntilSceneLoad();
+                await fader?.FadeIn();
+            }
+
+            await task.Delay(timeBeforeLoading);
+
             var loading = SceneManager.LoadSceneAsync(scene);
             loading.allowSceneActivation = false;
 
             await loading.WaitUntilSceneLoad();
 
+            await task.Delay(timeAfterLoading);
+
+            if (HasLoadingScene()) await fader?.FadeOut();
             loading.allowSceneActivation = true;
             await fader?.FadeIn();
         }

@@ -31,7 +31,7 @@ namespace ActionCode.SceneManagement
             // ScriptableObject.Awake() functions are only called when the game is launched on Builds.
             // SceneManagerSettingsProvider.AwakeSettings() will force to call this function
             // when entering in Play Mode using the Editor.
-            CheckFaderInstance();
+            if (Application.isPlaying) CheckFaderInstance();
         }
 
         public bool HasLoadingScene() => !string.IsNullOrEmpty(loadingScene);

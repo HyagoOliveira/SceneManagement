@@ -15,7 +15,7 @@ namespace ActionCode.SceneManagement
         event Action<float> OnProgressChanged;
 
         /// <summary>
-        /// The Loading Scene.
+        /// The Loading Scene name (the scene that will display that other scene is being loaded).
         /// </summary>
         string LoadingScene { get; }
 

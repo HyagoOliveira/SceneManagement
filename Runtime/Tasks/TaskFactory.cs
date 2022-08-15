@@ -19,8 +19,6 @@ namespace ActionCode.SceneManagement
         /// <returns></returns>
         public static ITask Create()
         {
-            return new SynchronousTask();
-
 #if ASYNCHRONOUS_PLATFORM
             return new AsynchronousTask();
 #else

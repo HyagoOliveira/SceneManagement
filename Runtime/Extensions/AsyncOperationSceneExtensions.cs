@@ -24,5 +24,16 @@ namespace ActionCode.SceneManagement
                 await Task.Yield();
             }
         }
+
+        /// <summary>
+        /// Waits until the given single scene completes the loading process.
+        /// </summary>
+        /// <param name="operation"></param>
+        /// <returns>An operation that will be completed when the single scene completes the loading process.</returns>
+        public static async Task WaitUntilSingleSceneLoad(this AsyncOperation operation)
+        {
+            while (!operation.isDone)
+                await Task.Yield();
+        }
     }
 }

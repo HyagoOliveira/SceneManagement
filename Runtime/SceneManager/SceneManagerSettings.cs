@@ -38,7 +38,7 @@ namespace ActionCode.SceneManagement
             if (HasLoadingScene())
             {
                 var loadingSceneOperation = SceneManager.LoadSceneAsync(loadingScene, LoadSceneMode.Single);
-                await loadingSceneOperation.WaitUntilSceneLoad();
+                await loadingSceneOperation.WaitUntilSingleSceneLoad();
 
                 progress.Report(0F);
                 await fader?.FadeIn();

@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - AnimationScreenFader component and prefab
 
 ### Changed
-- Scene Loading Setting asset uses Scriptable Settings Provider
+- Scriptable Settings Provider for Scene Manager Setting 
 - Replace ScreenFaderCanvas -> CanvasScreenFader
 
 ### Removed

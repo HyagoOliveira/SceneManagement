@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 
 namespace ActionCode.SceneManagement
@@ -7,6 +8,11 @@ namespace ActionCode.SceneManagement
     /// </summary>
     public interface ISceneManager
     {
+        /// <summary>
+        /// Action fired when the loading progress changed.
+        /// </summary>
+        event Action<float> OnProgressChanged;
+
         /// <summary>
         /// The Loading Scene.
         /// </summary>

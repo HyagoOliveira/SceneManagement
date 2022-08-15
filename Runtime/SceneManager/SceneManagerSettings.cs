@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,6 +18,8 @@ namespace ActionCode.SceneManagement
         private string loadingScene;
         [SerializeField, Tooltip("The Prefab containing an instance of AbstractScreenFader. It'll be instantiated at runtime.")]
         private AbstractScreenFader screenFader;
+
+        public event Action<float> OnProgressChanged;
 
         public string LoadingScene => loadingScene;
 
@@ -42,14 +45,18 @@ namespace ActionCode.SceneManagement
             var loading = SceneManager.LoadSceneAsync(scene);
             loading.allowSceneActivation = false;
 
-            await loading.WaitUntilSceneLoad();
+            IProgress<float> progress = new Progress<float>(ReportProgress);
+            await loading.WaitUntilSceneLoad(progress);
 
+            progress.Report(1F);
             await task.Delay(timeAfterLoading);
 
             if (HasLoadingScene()) await fader?.FadeOut();
             loading.allowSceneActivation = true;
             await fader?.FadeIn();
         }
+
+        private void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);
 
         private void CheckScreenFaderInstance()
         {

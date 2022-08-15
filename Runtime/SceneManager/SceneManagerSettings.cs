@@ -44,6 +44,7 @@ namespace ActionCode.SceneManagement
 
             if (HasLoadingScene())
             {
+                // will automatically unload the previous Scene.
                 var loadingSceneOperation = SceneManager.LoadSceneAsync(loadingScene, LoadSceneMode.Single);
                 await loadingSceneOperation.WaitUntilSingleSceneLoad();
 
@@ -54,6 +55,7 @@ namespace ActionCode.SceneManagement
             await task.Delay(timeBeforeLoading);
 
             var loading = SceneManager.LoadSceneAsync(scene);
+            // will prevent to automatically unload the Loading Scene.
             loading.allowSceneActivation = false;
 
             await loading.WaitUntilSceneLoad(progress);
@@ -62,6 +64,8 @@ namespace ActionCode.SceneManagement
             await task.Delay(timeAfterLoading);
 
             if (HasLoadingScene()) await Fader?.FadeOut();
+
+            // will automatically unload the Loading Scene.
             loading.allowSceneActivation = true;
             await Fader?.FadeIn();
         }

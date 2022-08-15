@@ -10,6 +10,7 @@ namespace ActionCode.SceneManagement
     {
         /// <summary>
         /// Action fired when the loading progress changed.
+        /// <para>The progress is on percentage.</para>
         /// </summary>
         event Action<float> OnProgressChanged;
 

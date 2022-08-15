@@ -33,10 +33,14 @@ namespace ActionCode.SceneManagement
             CheckScreenFaderInstance();
             await fader?.FadeOut();
 
+            IProgress<float> progress = new Progress<float>(ReportProgress);
+
             if (HasLoadingScene())
             {
                 var loadingSceneOperation = SceneManager.LoadSceneAsync(loadingScene, LoadSceneMode.Single);
                 await loadingSceneOperation.WaitUntilSceneLoad();
+
+                progress.Report(0F);
                 await fader?.FadeIn();
             }
 
@@ -45,7 +49,6 @@ namespace ActionCode.SceneManagement
             var loading = SceneManager.LoadSceneAsync(scene);
             loading.allowSceneActivation = false;
 
-            IProgress<float> progress = new Progress<float>(ReportProgress);
             await loading.WaitUntilSceneLoad(progress);
 
             progress.Report(1F);

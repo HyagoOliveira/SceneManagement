@@ -33,10 +33,10 @@ namespace ActionCode.SceneManagement
         public async Task LoadScene(string scene)
         {
             CheckInstances();
-            behaviour.StartCoroutine(LoadSceneCoroutine(scene));
+            if (isLoading) throw new Exception($"Cannot load {scene} since other scene is being loaded.");
 
-            while (isLoading)
-                await Task.Yield();
+            behaviour.StartCoroutine(LoadSceneCoroutine(scene));
+            while (isLoading) await Task.Yield();
         }
 
         private IEnumerator LoadSceneCoroutine(string scene)

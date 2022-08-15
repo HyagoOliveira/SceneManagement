@@ -12,13 +12,13 @@ namespace ActionCode.SceneManagement
         /// <summary>
         /// Fades the screen in (the content will appear).
         /// </summary>
-        /// <returns>An operation that will be completed when all screen content appears.</returns>
+        /// <returns>An enumerator that will be completed when all screen content appears.</returns>
         public abstract IEnumerator FadeIn();
 
         /// <summary>
         /// Fades the screen out (the content will disappear).
         /// </summary>
-        /// <returns>An operation that will be completed when all screen content disappears.</returns>
+        /// <returns>An enumerator that will be completed when all screen content disappears.</returns>
         public abstract IEnumerator FadeOut();
     }
 }

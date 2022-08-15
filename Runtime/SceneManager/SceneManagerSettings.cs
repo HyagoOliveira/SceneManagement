@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 namespace ActionCode.SceneManagement
 {
     /// <summary>
-    /// Settings for Scenes loading.
+    /// The Scene Manager Settings.
     /// </summary>
     public sealed class SceneManagerSettings : ScriptableObject, ISceneManager
     {
@@ -46,7 +46,7 @@ namespace ActionCode.SceneManagement
             {
                 // will automatically unload the previous Scene.
                 var loadingSceneOperation = SceneManager.LoadSceneAsync(loadingScene, LoadSceneMode.Single);
-                await loadingSceneOperation.WaitUntilSingleSceneLoad();
+                await loadingSceneOperation.WaitUntilIsDone();
 
                 progress.Report(0F);
                 await Fader?.FadeIn();
@@ -54,11 +54,11 @@ namespace ActionCode.SceneManagement
 
             await task.Delay(timeBeforeLoading);
 
-            var loading = SceneManager.LoadSceneAsync(scene);
+            var loading = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
             // will prevent to automatically unload the Loading Scene.
             loading.allowSceneActivation = false;
 
-            await loading.WaitUntilSceneLoad(progress);
+            await loading.WaitUntilActivationProgress(progress);
 
             progress.Report(1F);
             await task.Delay(timeAfterLoading);

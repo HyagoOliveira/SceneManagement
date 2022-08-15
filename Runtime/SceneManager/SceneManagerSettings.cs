@@ -18,12 +18,12 @@ namespace ActionCode.SceneManagement
         [SerializeField, Scene, Tooltip("The Loading Scene.")]
         private string loadingScene;
         [SerializeField, Tooltip("The Prefab containing an instance of AbstractScreenFader. It'll be instantiated at runtime.")]
-        private AbstractScreenFader screenFader;
+        private AbstractScreenFader screenFaderPrefab;
 
         public event Action<float> OnProgressChanged;
 
         public string LoadingScene => loadingScene;
-        public IScreenFader Fader { get; private set; }
+        public AbstractScreenFader Fader { get; private set; }
 
         private bool isLoading;
         private SceneManagerBehaviour behaviour;
@@ -91,14 +91,14 @@ namespace ActionCode.SceneManagement
         private void CheckFaderInstance()
         {
             if (Fader != null) return;
-            if (screenFader == null)
+            if (screenFaderPrefab == null)
             {
                 Debug.LogWarning("No Screen Fader Prefab set. " +
                     "Set one in Project Settings > ActionCode > Scene Manager.");
                 return;
             }
 
-            Fader = GetOrStaticCreate<AbstractScreenFader>(screenFader.gameObject);
+            Fader = GetOrStaticCreate<AbstractScreenFader>(screenFaderPrefab.gameObject);
         }
 
         private static T GetOrStaticCreate<T>(string name) where T : Component

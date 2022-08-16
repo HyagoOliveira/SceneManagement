@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - Scriptable Settings Provider package 1.0.0
+- IScreenFader interface
 - AnimationScreenFader component and prefab
 
 ### Changed

@@ -25,8 +25,10 @@ namespace ActionCode.SceneManagement
         public string LoadingScene => loadingScene;
         public AbstractScreenFader Fader { get; private set; }
 
+        private SceneManagerBehaviour Behaviour => behaviour.Value;
+
         private bool isLoading;
-        private SceneManagerBehaviour behaviour;
+        private readonly Lazy<SceneManagerBehaviour> behaviour = new Lazy<SceneManagerBehaviour>(GetOrCreateBehaviour);
 
         public bool HasLoadingScene() => !string.IsNullOrEmpty(loadingScene);
 
@@ -35,7 +37,7 @@ namespace ActionCode.SceneManagement
             CheckInstances();
             if (isLoading) throw new Exception($"Cannot load {scene} since other scene is being loaded.");
 
-            behaviour.StartCoroutine(LoadSceneCoroutine(scene));
+            Behaviour.StartCoroutine(LoadSceneCoroutine(scene));
             while (isLoading) await Task.Yield();
         }
 
@@ -83,15 +85,7 @@ namespace ActionCode.SceneManagement
 
         private void CheckInstances()
         {
-            CheckBehaviourInstance();
             CheckFaderInstance();
-        }
-
-        private void CheckBehaviourInstance()
-        {
-            if (behaviour) return;
-            behaviour = GetOrStaticCreate<SceneManagerBehaviour>("SceneManager");
-            behaviour.Settings = this;
         }
 
         private void CheckFaderInstance()
@@ -138,10 +132,12 @@ namespace ActionCode.SceneManagement
             return gameObject.GetComponent<T>();
         }
 
+        private static SceneManagerBehaviour GetOrCreateBehaviour() =>
+             GetOrStaticCreate<SceneManagerBehaviour>("SceneManager");
+
         internal void Dispose()
         {
             Fader = null;
-            behaviour = null;
             isLoading = false;
         }
     }

@@ -22,7 +22,7 @@ namespace ActionCode.SceneManagement
         /// <summary>
         /// The Screen Fader used to fade the screen in/out before change Scenes.
         /// </summary>
-        AbstractScreenFader Fader { get; }
+        IScreenFader Fader { get; }
 
         /// <summary>
         /// Checks if a Loading Scene was set.

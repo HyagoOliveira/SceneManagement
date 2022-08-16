@@ -23,7 +23,7 @@ namespace ActionCode.SceneManagement
         public event Action<float> OnProgressChanged;
 
         public string LoadingScene => loadingScene;
-        public AbstractScreenFader Fader { get; private set; }
+        public IScreenFader Fader { get; private set; }
 
         private SceneManagerBehaviour Behaviour => behaviour.Value;
 
@@ -47,7 +47,7 @@ namespace ActionCode.SceneManagement
         {
             isLoading = true;
 
-            yield return FadeScreenOut();
+            yield return Fader?.FadeOut();
             IProgress<float> progress = new Progress<float>(ReportProgress);
 
             if (HasLoadingScene())
@@ -57,7 +57,7 @@ namespace ActionCode.SceneManagement
                 yield return loadingSceneOperation;
 
                 progress.Report(0F);
-                yield return FadeScreenIn();
+                yield return Fader?.FadeIn();
             }
 
             yield return new WaitForSeconds(timeBeforeLoading);
@@ -71,17 +71,14 @@ namespace ActionCode.SceneManagement
             progress.Report(1F);
             yield return new WaitForSeconds(timeAfterLoading);
 
-            if (HasLoadingScene()) yield return FadeScreenOut();
+            if (HasLoadingScene()) yield return Fader?.FadeOut();
 
             // will automatically unload the Loading Scene.
             loadingOperation.allowSceneActivation = true;
-            yield return FadeScreenIn();
+            yield return Fader?.FadeIn();
 
             isLoading = false;
         }
-
-        private IEnumerator FadeScreenIn() => Fader ? Fader.FadeIn() : null;
-        private IEnumerator FadeScreenOut() => Fader ? Fader.FadeOut() : null;
 
         private void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);
 

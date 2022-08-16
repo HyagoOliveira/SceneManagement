@@ -24,7 +24,6 @@ namespace ActionCode.SceneManagement
 
         public string LoadingScene => loadingScene;
         public IScreenFader Fader { get; private set; }
-
         private SceneManagerBehaviour Behaviour => behaviour.Value;
 
         private bool isLoading;
@@ -36,7 +35,7 @@ namespace ActionCode.SceneManagement
 
         public async Task LoadScene(string scene)
         {
-            CheckInstances();
+            CheckFader();
             if (isLoading) throw new Exception($"Cannot load {scene} since other scene is being loaded.");
 
             Behaviour.StartCoroutine(LoadSceneCoroutine(scene));
@@ -82,22 +81,32 @@ namespace ActionCode.SceneManagement
 
         private void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);
 
-        private void CheckInstances()
-        {
-            CheckFaderInstance();
-        }
-
-        private void CheckFaderInstance()
+        private void CheckFader()
         {
             if (Fader != null) return;
-            if (screenFaderPrefab == null)
+
+            var fader = FindObjectOfType<AbstractScreenFader>(includeInactive: true);
+            GameObject instance;
+
+            if (fader) instance = fader.gameObject;
+            else
             {
-                Debug.LogWarning("No Screen Fader Prefab set. " +
-                    "Set one in Project Settings > ActionCode > Scene Manager.");
-                return;
+                if (screenFaderPrefab == null) return;
+
+                var prefab = screenFaderPrefab.gameObject;
+                instance = Instantiate(prefab);
+                instance.name = prefab.name;
+                fader = instance.GetComponent<AbstractScreenFader>();
             }
 
-            Fader = GetOrStaticCreate<AbstractScreenFader>(screenFaderPrefab.gameObject);
+            Fader = fader;
+            DontDestroyOnLoad(instance);
+        }
+
+        private static SceneManagerBehaviour GetOrCreateBehaviour()
+        {
+            var name = typeof(SceneManagerBehaviour).Name;
+            return GetOrStaticCreate<SceneManagerBehaviour>(name, HideFlags.NotEditable);
         }
 
         private static T GetOrStaticCreate<T>(string name, HideFlags hideFlags = HideFlags.None) where T : Component
@@ -112,28 +121,6 @@ namespace ActionCode.SceneManagement
             DontDestroyOnLoad(gameObject);
 
             return hasComponent ? component : gameObject.AddComponent<T>();
-        }
-
-        private static T GetOrStaticCreate<T>(GameObject prefab) where T : Component
-        {
-            var component = FindObjectOfType<T>(includeInactive: true);
-            if (component != null)
-            {
-                DontDestroyOnLoad(component.gameObject);
-                return component;
-            }
-
-            var gameObject = Instantiate(prefab);
-            gameObject.name = prefab.name;
-            DontDestroyOnLoad(gameObject);
-
-            return gameObject.GetComponent<T>();
-        }
-
-        private static SceneManagerBehaviour GetOrCreateBehaviour()
-        {
-            var name = typeof(SceneManagerBehaviour).Name;
-            return GetOrStaticCreate<SceneManagerBehaviour>(name, HideFlags.NotEditable);
         }
     }
 }

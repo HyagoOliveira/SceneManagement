@@ -30,6 +30,8 @@ namespace ActionCode.SceneManagement
         private bool isLoading;
         private readonly Lazy<SceneManagerBehaviour> behaviour = new Lazy<SceneManagerBehaviour>(GetOrCreateBehaviour);
 
+        private void OnDisable() => isLoading = false;
+
         public bool HasLoadingScene() => !string.IsNullOrEmpty(loadingScene);
 
         public async Task LoadScene(string scene)
@@ -135,12 +137,6 @@ namespace ActionCode.SceneManagement
         {
             var name = typeof(SceneManagerBehaviour).Name;
             return GetOrStaticCreate<SceneManagerBehaviour>(name, HideFlags.NotEditable);
-        }
-
-        internal void Dispose()
-        {
-            Fader = null;
-            isLoading = false;
         }
     }
 }

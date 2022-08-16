@@ -101,19 +101,18 @@ namespace ActionCode.SceneManagement
             Fader = GetOrStaticCreate<AbstractScreenFader>(screenFaderPrefab.gameObject);
         }
 
-        private static T GetOrStaticCreate<T>(string name) where T : Component
+        private static T GetOrStaticCreate<T>(string name, HideFlags hideFlags = HideFlags.None) where T : Component
         {
             var component = FindObjectOfType<T>(includeInactive: true);
-            if (component != null)
-            {
-                DontDestroyOnLoad(component.gameObject);
-                return component;
-            }
+            var hasComponent = component != null;
+            var gameObject = hasComponent ?
+                component.gameObject :
+                new GameObject(name);
 
-            var gameObject = new GameObject(name);
+            gameObject.hideFlags = hideFlags;
             DontDestroyOnLoad(gameObject);
 
-            return gameObject.AddComponent<T>();
+            return hasComponent ? component : gameObject.AddComponent<T>();
         }
 
         private static T GetOrStaticCreate<T>(GameObject prefab) where T : Component
@@ -132,8 +131,11 @@ namespace ActionCode.SceneManagement
             return gameObject.GetComponent<T>();
         }
 
-        private static SceneManagerBehaviour GetOrCreateBehaviour() =>
-             GetOrStaticCreate<SceneManagerBehaviour>("SceneManager");
+        private static SceneManagerBehaviour GetOrCreateBehaviour()
+        {
+            var name = typeof(SceneManagerBehaviour).Name;
+            return GetOrStaticCreate<SceneManagerBehaviour>(name, HideFlags.NotEditable);
+        }
 
         internal void Dispose()
         {

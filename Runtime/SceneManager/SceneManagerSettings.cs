@@ -30,25 +30,23 @@ namespace ActionCode.SceneManagement
 
         public bool HasLoadingScene() => !string.IsNullOrEmpty(loadingScene);
 
-        public async Task LoadScene(string scene, bool showLoadingScene = true)
+        public async Task LoadScene(string scene)
         {
             CheckInstances();
             if (isLoading) throw new Exception($"Cannot load {scene} since other scene is being loaded.");
 
-            showLoadingScene &= HasLoadingScene();
-
-            behaviour.StartCoroutine(LoadSceneCoroutine(scene, showLoadingScene));
+            behaviour.StartCoroutine(LoadSceneCoroutine(scene));
             while (isLoading) await Task.Yield();
         }
 
-        private IEnumerator LoadSceneCoroutine(string scene, bool showLoadingScene)
+        private IEnumerator LoadSceneCoroutine(string scene)
         {
             isLoading = true;
 
             yield return FadeScreenOut();
             IProgress<float> progress = new Progress<float>(ReportProgress);
 
-            if (showLoadingScene)
+            if (HasLoadingScene())
             {
                 // will automatically unload the previous Scene.
                 var loadingSceneOperation = SceneManager.LoadSceneAsync(loadingScene, LoadSceneMode.Single);
@@ -69,7 +67,7 @@ namespace ActionCode.SceneManagement
             progress.Report(1F);
             yield return new WaitForSeconds(timeAfterLoading);
 
-            if (showLoadingScene) yield return FadeScreenOut();
+            if (HasLoadingScene()) yield return FadeScreenOut();
 
             // will automatically unload the Loading Scene.
             loadingOperation.allowSceneActivation = true;

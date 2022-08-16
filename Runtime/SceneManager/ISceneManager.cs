@@ -30,6 +30,6 @@ namespace ActionCode.SceneManagement
         /// <returns>True if a Loading Scene was set. False otherwise.</returns>
         bool HasLoadingScene();
 
-        Task LoadScene(string scene, bool showLoadingScene = true);
+        Task LoadScene(string scene);
     }
 }

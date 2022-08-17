@@ -5,6 +5,7 @@
 * Current version: **1.0.1**
 * License: **MIT**
 * Dependencies:
+    - [com.actioncode.awaitable-coroutines : 1.0.0](https://github.com/HyagoOliveira/AwaitableCoroutines/tree/1.0.0)
     - [com.actioncode.scriptable-settings-provider : 1.0.0](https://github.com/HyagoOliveira/ScriptableSettingsProvider/tree/1.0.0)
 
 ## Summary

@@ -22,6 +22,7 @@
     "email": "hyagogow@gmail.com"
   },
   "dependencies": {
+    "com.actioncode.awaitable-coroutines": "1.0.0",
     "com.actioncode.scriptable-settings-provider": "1.0.0"
   }
 }

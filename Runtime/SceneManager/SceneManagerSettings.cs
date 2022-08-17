@@ -35,12 +35,25 @@ namespace ActionCode.SceneManagement
         public async Task LoadScene(string scene)
         {
             CheckFader();
-            if (isLoading) throw new Exception($"Cannot load {scene} since other scene is being loaded.");
-            await AwaitableCoroutine.Run(LoadSceneCoroutine(scene));
+
+            try
+            {
+                await AwaitableCoroutine.Run(LoadSceneCoroutine(scene));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         private IEnumerator LoadSceneCoroutine(string scene)
         {
+            if (isLoading)
+            {
+                Debug.LogError($"Cannot load {scene} since other scene is being loaded.");
+                yield break;
+            }
+
             isLoading = true;
 
             yield return Fader?.FadeOut();
@@ -59,6 +72,8 @@ namespace ActionCode.SceneManagement
             yield return new WaitForSeconds(timeBeforeLoading);
 
             var loadingOperation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
+            if (loadingOperation == null) yield break;
+
             // will prevent to automatically unload the Loading Scene.
             loadingOperation.allowSceneActivation = false;
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using ActionCode.AwaitableCoroutines;
 
 namespace ActionCode.SceneManagement
 {
@@ -24,10 +25,8 @@ namespace ActionCode.SceneManagement
 
         public string LoadingScene => loadingScene;
         public IScreenFader Fader { get; private set; }
-        private SceneManagerBehaviour Behaviour => behaviour.Value;
 
         private bool isLoading;
-        private readonly Lazy<SceneManagerBehaviour> behaviour = new Lazy<SceneManagerBehaviour>(GetOrCreateBehaviour);
 
         private void OnDisable() => isLoading = false;
 
@@ -37,9 +36,7 @@ namespace ActionCode.SceneManagement
         {
             CheckFader();
             if (isLoading) throw new Exception($"Cannot load {scene} since other scene is being loaded.");
-
-            Behaviour.StartCoroutine(LoadSceneCoroutine(scene));
-            while (isLoading) await Task.Yield();
+            await AwaitableCoroutine.Run(LoadSceneCoroutine(scene));
         }
 
         private IEnumerator LoadSceneCoroutine(string scene)
@@ -101,26 +98,6 @@ namespace ActionCode.SceneManagement
 
             Fader = fader;
             DontDestroyOnLoad(instance);
-        }
-
-        private static SceneManagerBehaviour GetOrCreateBehaviour()
-        {
-            var name = typeof(SceneManagerBehaviour).Name;
-            return GetOrStaticCreate<SceneManagerBehaviour>(name, HideFlags.NotEditable);
-        }
-
-        private static T GetOrStaticCreate<T>(string name, HideFlags hideFlags = HideFlags.None) where T : Component
-        {
-            var component = FindObjectOfType<T>(includeInactive: true);
-            var hasComponent = component != null;
-            var gameObject = hasComponent ?
-                component.gameObject :
-                new GameObject(name);
-
-            gameObject.hideFlags = hideFlags;
-            DontDestroyOnLoad(gameObject);
-
-            return hasComponent ? component : gameObject.AddComponent<T>();
         }
     }
 }

@@ -24,9 +24,10 @@ namespace ActionCode.SceneManagement
         public event Action<float> OnProgressChanged;
 
         public string LoadingScene => loadingScene;
-        public IScreenFader Fader { get; private set; }
+        public IScreenFader Fader => fader.Value;
 
         private bool isLoading;
+        private Lazy<IScreenFader> fader;
 
         private void OnDisable() => isLoading = false;
 
@@ -34,7 +35,7 @@ namespace ActionCode.SceneManagement
 
         public async Task LoadScene(string scene)
         {
-            CheckFader();
+            CheckLazyFader();
 
             try
             {
@@ -93,26 +94,10 @@ namespace ActionCode.SceneManagement
 
         private void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);
 
-        private void CheckFader()
+        private void CheckLazyFader()
         {
-            if (Fader != null) return;
-
-            var fader = FindObjectOfType<AbstractScreenFader>(includeInactive: true);
-            GameObject instance;
-
-            if (fader) instance = fader.gameObject;
-            else
-            {
-                if (screenFaderPrefab == null) return;
-
-                var prefab = screenFaderPrefab.gameObject;
-                instance = Instantiate(prefab);
-                instance.name = prefab.name;
-                fader = instance.GetComponent<AbstractScreenFader>();
-            }
-
-            Fader = fader;
-            DontDestroyOnLoad(instance);
+            if (fader != null) return;
+            fader = new Lazy<IScreenFader>(ScreenFaderFactory.Create(screenFaderPrefab));
         }
     }
 }

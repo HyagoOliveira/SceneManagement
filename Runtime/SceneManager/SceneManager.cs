@@ -8,7 +8,7 @@ using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 namespace ActionCode.SceneManagement
 {
     /// <summary>
-    /// The Scene Manager.
+    /// The Scene Manager. It loads new Scenes by first opening a LoadingScene and showing fade transitions.
     /// </summary>
     public sealed class SceneManager : ScriptableObject, ISceneManager
     {

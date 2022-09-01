@@ -10,8 +10,9 @@ namespace ActionCode.SceneManagement
     /// <summary>
     /// The Scene Manager Settings.
     /// </summary>
-    public sealed class SceneManagerSettings : ScriptableObject, ISceneManager
+    public sealed class SceneManagerSettings : ScriptableObject
     {
+        public SceneTransitionData defaultTransition;
         [SerializeField, Min(0F), Tooltip("Time (in seconds) to wait before starts the loading process.")]
         private float timeBeforeLoading = 0F;
         [SerializeField, Min(0F), Tooltip("Time (in seconds) to wait after the loading process has finished.")]

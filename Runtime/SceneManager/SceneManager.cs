@@ -13,7 +13,7 @@ namespace ActionCode.SceneManagement
     public sealed class SceneManager : ScriptableObject, ISceneManager
     {
         [Tooltip("De default Scene Transition values used when none is provided.")]
-        public SceneTransitionData defaultTransition;
+        public SceneTransition defaultTransition;
 
         public event Action<float> OnProgressChanged;
 
@@ -21,7 +21,7 @@ namespace ActionCode.SceneManagement
 
         public async Task LoadScene(string scene) => await LoadScene(scene, defaultTransition);
 
-        public async Task LoadScene(string scene, SceneTransitionData data)
+        public async Task LoadScene(string scene, SceneTransition data)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace ActionCode.SceneManagement
             }
         }
 
-        private IEnumerator LoadSceneCoroutine(string scene, SceneTransitionData data)
+        private IEnumerator LoadSceneCoroutine(string scene, SceneTransition data)
         {
             if (IsLoading)
                 throw new Exception($"Cannot load {scene} since other scene is being loaded.");

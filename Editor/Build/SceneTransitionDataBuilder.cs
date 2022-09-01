@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 namespace ActionCode.SceneManagement.Editor
 {
     /// <summary>
-    /// Checks if the Loading Scene from all <see cref="SceneTransitionData"/> has been add to the build./>
+    /// Checks if the Loading Scene from all <see cref="SceneTransition"/> has been add to the build./>
     /// </summary>
     public sealed class SceneTransitionDataBuilder : IPreprocessBuildWithReport
     {
@@ -19,7 +19,7 @@ namespace ActionCode.SceneManagement.Editor
             if (hasAnyData) CheckForLoadingScenes(data);
         }
 
-        private static void CheckForLoadingScenes(SceneTransitionData[] transitionData)
+        private static void CheckForLoadingScenes(SceneTransition[] transitionData)
         {
             foreach (var data in transitionData)
             {
@@ -39,16 +39,16 @@ namespace ActionCode.SceneManagement.Editor
             }
         }
 
-        private static SceneTransitionData[] FindAllSceneTransitionData()
+        private static SceneTransition[] FindAllSceneTransitionData()
         {
-            var filter = $"t:{typeof(SceneTransitionData).Name}";
+            var filter = $"t:{typeof(SceneTransition).Name}";
             var guids = AssetDatabase.FindAssets(filter);
-            var transitionData = new SceneTransitionData[guids.Length];
+            var transitionData = new SceneTransition[guids.Length];
 
             for (int i = 0; i < guids.Length; i++)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guids[i]);
-                transitionData[i] = AssetDatabase.LoadAssetAtPath<SceneTransitionData>(path);
+                transitionData[i] = AssetDatabase.LoadAssetAtPath<SceneTransition>(path);
             }
 
             return transitionData;

@@ -23,6 +23,6 @@ namespace ActionCode.SceneManagement
         bool IsLoading { get; }
 
         Task LoadScene(string scene);
-        Task LoadScene(string scene, SceneTransitionData data);
+        Task LoadScene(string scene, SceneTransition data);
     }
 }

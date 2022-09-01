@@ -7,7 +7,7 @@ namespace ActionCode.SceneManagement
     /// Data container used to customize how Scene Transitions should behave.
     /// </summary>
     [CreateAssetMenu(fileName = "NewSceneTransition", menuName = "ActionCode/SceneManager/Scene Transition", order = 110)]
-    public sealed class SceneTransitionData : ScriptableObject
+    public sealed class SceneTransition : ScriptableObject
     {
         [SerializeField, Min(0F), Tooltip("Time (in seconds) to wait before starts the loading process.")]
         private float timeBeforeLoading = 0F;

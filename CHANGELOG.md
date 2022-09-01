@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - IScreenFader interface
 - AnimationScreenFader component and prefab
 - ScreenFaderPool
-- SceneTransitionData
+- SceneTransition
 
 ### Changed
 - Scriptable Settings Provider for Scene Manager 

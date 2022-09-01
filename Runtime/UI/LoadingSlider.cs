@@ -25,8 +25,8 @@ namespace ActionCode.SceneManagement
             slider.value = 50F;
         }
 
-        private void OnEnable() => settings.OnProgressChanged += HandleProgressChanged;
-        private void OnDisable() => settings.OnProgressChanged -= HandleProgressChanged;
+        private void OnEnable() => settings.Transition.OnProgressChanged += HandleProgressChanged;
+        private void OnDisable() => settings.Transition.OnProgressChanged -= HandleProgressChanged;
 
         private void HandleProgressChanged(float progress) => slider.value = progress;
     }

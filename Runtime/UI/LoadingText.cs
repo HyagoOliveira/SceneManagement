@@ -18,8 +18,8 @@ namespace ActionCode.SceneManagement
         public const string TEXT_FORMAT = "{0} %";
 
         private void Reset() => text = GetComponent<Text>();
-        private void OnEnable() => settings.OnProgressChanged += HandleProgressChanged;
-        private void OnDisable() => settings.OnProgressChanged -= HandleProgressChanged;
+        private void OnEnable() => settings.Transition.OnProgressChanged += HandleProgressChanged;
+        private void OnDisable() => settings.Transition.OnProgressChanged -= HandleProgressChanged;
 
         private void HandleProgressChanged(float progress) =>
             text.text = string.Format(TEXT_FORMAT, progress);

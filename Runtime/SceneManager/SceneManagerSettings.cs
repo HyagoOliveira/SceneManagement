@@ -10,7 +10,7 @@ namespace ActionCode.SceneManagement
     public sealed class SceneManagerSettings : ScriptableObject
     {
         [Tooltip("De default Scene Transition values used when none is provided.")]
-        public SceneTransitionData defaultTransition;
+        public ScriptableSceneTransitionData defaultTransition;
 
         public ISceneTransition Transition => lazyTransition.Value;
 
@@ -19,7 +19,7 @@ namespace ActionCode.SceneManagement
 
         public async Task LoadScene(string scene)
         {
-            defaultTransition.InitializeLazyFader();
+            defaultTransition.Initialize();
             await Transition.LoadScene(scene, defaultTransition);
         }
 

@@ -19,6 +19,6 @@ namespace ActionCode.SceneManagement
         /// </summary>
         bool IsLoading { get; }
 
-        Task LoadScene(string scene, ISceneTransitionData data);
+        Task LoadScene(string scene, ScriptableSceneTransitionData data);
     }
 }

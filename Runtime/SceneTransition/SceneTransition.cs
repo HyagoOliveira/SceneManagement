@@ -13,7 +13,7 @@ namespace ActionCode.SceneManagement
 
         public bool IsLoading { get; private set; }
 
-        public async Task LoadScene(string scene, ISceneTransitionData data)
+        public async Task LoadScene(string scene, ScriptableSceneTransitionData data)
         {
             try
             {
@@ -25,7 +25,7 @@ namespace ActionCode.SceneManagement
             }
         }
 
-        private IEnumerator LoadSceneCoroutine(string scene, ISceneTransitionData data)
+        private IEnumerator LoadSceneCoroutine(string scene, ScriptableSceneTransitionData data)
         {
             if (IsLoading)
                 throw new Exception($"Cannot load {scene} since other scene is being loaded.");

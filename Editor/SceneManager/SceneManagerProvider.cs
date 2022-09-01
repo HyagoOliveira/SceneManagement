@@ -3,10 +3,10 @@ using ActionCode.ScriptableSettingsProvider.Editor;
 
 namespace ActionCode.SceneManagement.Editor
 {
-    public sealed class SceneManagerSettingsProvider :
-        AbstractScriptableSettingsProvider<SceneManagerSettings>
+    public sealed class SceneManagerProvider :
+        AbstractScriptableSettingsProvider<SceneManager>
     {
-        public SceneManagerSettingsProvider() :
+        public SceneManagerProvider() :
             base("ActionCode/Scene Manager")
         { }
 
@@ -14,6 +14,6 @@ namespace ActionCode.SceneManagement.Editor
 
         [SettingsProvider]
         private static SettingsProvider CreateProjectSettingsMenu() =>
-            new SceneManagerSettingsProvider();
+            new SceneManagerProvider();
     }
 }

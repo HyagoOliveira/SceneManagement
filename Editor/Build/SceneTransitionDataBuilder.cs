@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 namespace ActionCode.SceneManagement.Editor
 {
     /// <summary>
-    /// Checks if the Loading Scene from all <see cref="ScriptableSceneTransitionData"/> has been add to the build./>
+    /// Checks if the Loading Scene from all <see cref="SceneTransitionData"/> has been add to the build./>
     /// </summary>
-    public sealed class ScriptableSceneTransitionBuilder : IPreprocessBuildWithReport
+    public sealed class SceneTransitionDataBuilder : IPreprocessBuildWithReport
     {
         public int callbackOrder => 0;
 
@@ -19,7 +19,7 @@ namespace ActionCode.SceneManagement.Editor
             if (hasAnyData) CheckForLoadingScenes(data);
         }
 
-        private static void CheckForLoadingScenes(ScriptableSceneTransitionData[] transitionData)
+        private static void CheckForLoadingScenes(SceneTransitionData[] transitionData)
         {
             foreach (var data in transitionData)
             {
@@ -33,22 +33,22 @@ namespace ActionCode.SceneManagement.Editor
                     var assetPath = AssetDatabase.GetAssetPath(data);
                     var error = $"Asset '{assetPath}' has the Loading Scene '{data.LoadingScene}' which " +
                         $"was not add to the Build Settings. This Loading Scene cannot be loaded at runtime.\n" +
-                        $"To add this scene to the Build Settings use the menu File > Build Settings.";
+                        $"Use the menu File > Build Settings to add this scene to the Build Settings.";
                     throw new BuildFailedException(error);
                 }
             }
         }
 
-        private static ScriptableSceneTransitionData[] FindAllSceneTransitionData()
+        private static SceneTransitionData[] FindAllSceneTransitionData()
         {
-            var filter = $"t:{typeof(ScriptableSceneTransitionData).Name}";
+            var filter = $"t:{typeof(SceneTransitionData).Name}";
             var guids = AssetDatabase.FindAssets(filter);
-            var transitionData = new ScriptableSceneTransitionData[guids.Length];
+            var transitionData = new SceneTransitionData[guids.Length];
 
             for (int i = 0; i < guids.Length; i++)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guids[i]);
-                transitionData[i] = AssetDatabase.LoadAssetAtPath<ScriptableSceneTransitionData>(path);
+                transitionData[i] = AssetDatabase.LoadAssetAtPath<SceneTransitionData>(path);
             }
 
             return transitionData;

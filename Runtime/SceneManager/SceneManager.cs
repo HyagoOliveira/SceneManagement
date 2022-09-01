@@ -5,9 +5,9 @@ using UnityEngine;
 namespace ActionCode.SceneManagement
 {
     /// <summary>
-    /// The Scene Manager Settings.
+    /// The Scene Manager.
     /// </summary>
-    public sealed class SceneManagerSettings : ScriptableObject
+    public sealed class SceneManager : ScriptableObject
     {
         [Tooltip("De default Scene Transition values used when none is provided.")]
         public SceneTransitionData defaultTransition;

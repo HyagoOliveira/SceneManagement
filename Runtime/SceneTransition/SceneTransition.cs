@@ -3,7 +3,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using ActionCode.AwaitableCoroutines;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 namespace ActionCode.SceneManagement
 {
@@ -39,7 +39,7 @@ namespace ActionCode.SceneManagement
             if (hasLoadingScene)
             {
                 // will automatically unload the previous Scene.
-                var loadingSceneOperation = SceneManager.LoadSceneAsync(data.LoadingScene, LoadSceneMode.Single);
+                var loadingSceneOperation = UnitySceneManager.LoadSceneAsync(data.LoadingScene);
                 yield return loadingSceneOperation;
 
                 progress.Report(0F);
@@ -48,7 +48,7 @@ namespace ActionCode.SceneManagement
 
             yield return new WaitForSeconds(data.TimeBeforeLoading);
 
-            var loadingOperation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
+            var loadingOperation = UnitySceneManager.LoadSceneAsync(scene);
             if (loadingOperation == null) yield break;
 
             // will prevent to automatically unload the data.LoadingScene.

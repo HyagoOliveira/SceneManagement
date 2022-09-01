@@ -4,10 +4,10 @@ using UnityEngine;
 namespace ActionCode.SceneManagement
 {
     /// <summary>
-    /// Scriptable Scene Transition Data used to customize how Scene Transitions should behave.
+    /// Data container used to customize how Scene Transitions should behave.
     /// </summary>
     [CreateAssetMenu(fileName = "NewSceneTransition", menuName = "ActionCode/SceneManager/Scene Transition", order = 110)]
-    public sealed class ScriptableSceneTransitionData : ScriptableObject
+    public sealed class SceneTransitionData : ScriptableObject
     {
         [SerializeField, Min(0F), Tooltip("Time (in seconds) to wait before starts the loading process.")]
         private float timeBeforeLoading = 0F;

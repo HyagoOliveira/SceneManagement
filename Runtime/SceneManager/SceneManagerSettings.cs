@@ -10,7 +10,7 @@ namespace ActionCode.SceneManagement
     public sealed class SceneManagerSettings : ScriptableObject
     {
         [Tooltip("De default Scene Transition values used when none is provided.")]
-        public ScriptableSceneTransitionData defaultTransition;
+        public SceneTransitionData defaultTransition;
 
         public ISceneTransition Transition => lazyTransition.Value;
 

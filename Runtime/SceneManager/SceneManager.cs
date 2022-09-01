@@ -1,28 +1,82 @@
 using System;
+using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
+using ActionCode.AwaitableCoroutines;
+using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 namespace ActionCode.SceneManagement
 {
     /// <summary>
     /// The Scene Manager.
     /// </summary>
-    public sealed class SceneManager : ScriptableObject
+    public sealed class SceneManager : ScriptableObject, ISceneManager
     {
         [Tooltip("De default Scene Transition values used when none is provided.")]
         public SceneTransitionData defaultTransition;
 
-        public ISceneTransition Transition => lazyTransition.Value;
+        public event Action<float> OnProgressChanged;
 
-        private readonly Lazy<ISceneTransition> lazyTransition =
-            new Lazy<ISceneTransition>(CreateTransition);
+        public bool IsLoading { get; private set; }
 
-        public async Task LoadScene(string scene)
+        public async Task LoadScene(string scene) => await LoadScene(scene, defaultTransition);
+
+        public async Task LoadScene(string scene, SceneTransitionData data)
         {
-            defaultTransition.Initialize();
-            await Transition.LoadScene(scene, defaultTransition);
+            try
+            {
+                await AwaitableCoroutine.Run(LoadSceneCoroutine(scene, data));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        private static ISceneTransition CreateTransition() => new SceneTransition();
+        private IEnumerator LoadSceneCoroutine(string scene, SceneTransitionData data)
+        {
+            if (IsLoading)
+                throw new Exception($"Cannot load {scene} since other scene is being loaded.");
+
+            IsLoading = true;
+            var hasLoadingScene = !string.IsNullOrEmpty(data.LoadingScene);
+
+            yield return data.ScreenFader?.FadeOut();
+            IProgress<float> progress = new Progress<float>(ReportProgress);
+
+            if (hasLoadingScene)
+            {
+                // will automatically unload the previous Scene.
+                var loadingSceneOperation = UnitySceneManager.LoadSceneAsync(data.LoadingScene);
+                yield return loadingSceneOperation;
+
+                progress.Report(0F);
+                yield return data.ScreenFader?.FadeIn();
+            }
+
+            yield return new WaitForSeconds(data.TimeBeforeLoading);
+
+            var loadingOperation = UnitySceneManager.LoadSceneAsync(scene);
+            if (loadingOperation == null) yield break;
+
+            // will prevent to automatically unload the data.LoadingScene.
+            loadingOperation.allowSceneActivation = false;
+
+            yield return loadingOperation.WaitUntilActivationProgress(progress);
+
+            progress.Report(1F);
+            yield return new WaitForSeconds(data.TimeAfterLoading);
+
+            if (hasLoadingScene) yield return data.ScreenFader?.FadeOut();
+
+            // will automatically unload the data.LoadingScene.
+            loadingOperation.allowSceneActivation = true;
+            yield return data.ScreenFader?.FadeIn();
+
+            IsLoading = false;
+        }
+
+        private void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);
+
     }
 }

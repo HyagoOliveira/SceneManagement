@@ -3,7 +3,10 @@ using System.Threading.Tasks;
 
 namespace ActionCode.SceneManagement
 {
-    public interface ISceneTransition
+    /// <summary>
+    /// Interface used on objects able to be a Scene Manager.
+    /// </summary>
+    public interface ISceneManager
     {
         /// <summary>
         /// Action fired when the Scene Loading Progress changes.
@@ -19,6 +22,7 @@ namespace ActionCode.SceneManagement
         /// </summary>
         bool IsLoading { get; }
 
+        Task LoadScene(string scene);
         Task LoadScene(string scene, SceneTransitionData data);
     }
 }

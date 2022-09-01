@@ -3,10 +3,18 @@ using System.Collections.Generic;
 
 namespace ActionCode.SceneManagement
 {
-    public static class ScreenFaderFactory
+    /// <summary>
+    /// Pool factory for <see cref="IScreenFader"/>.
+    /// </summary>
+    public static class ScreenFaderPool
     {
-        private static Dictionary<int, GameObject> instances = new Dictionary<int, GameObject>();
+        private readonly static Dictionary<int, GameObject> instances = new Dictionary<int, GameObject>();
 
+        /// <summary>
+        /// Creates or returns an instance of <see cref="IScreenFader"/>.
+        /// </summary>
+        /// <param name="faderPrefab">The prefab containing a component of <see cref="AbstractScreenFader"/>.</param>
+        /// <returns>Always a global instance of <see cref="IScreenFader"/>.</returns>
         public static IScreenFader Create(AbstractScreenFader faderPrefab)
         {
             if (faderPrefab == null) return null;

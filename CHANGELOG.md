@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - AnimationScreenFader component and prefab
 - ScreenFaderPool
 - SceneTransition
+- TextMeshPro support
 
 ### Changed
 - Scriptable Settings Provider for Scene Manager 

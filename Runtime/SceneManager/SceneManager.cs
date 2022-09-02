@@ -63,7 +63,7 @@ namespace ActionCode.SceneManagement
 
             yield return new WaitForSeconds(transition.TimeBeforeLoading);
 
-            var loadingOperation = UnitySceneManager.LoadSceneAsync(scene, SceneMode.Additive);
+            var loadingOperation = UnitySceneManager.LoadSceneAsync(scene);
 
             // Check if scene was valid.
             if (loadingOperation == null) yield break;

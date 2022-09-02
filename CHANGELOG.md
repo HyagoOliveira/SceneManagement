@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - ScreenFaderPool
 - SceneTransition
 - TextMeshPro support
+- LoadSceneAfterTime
 
 ### Changed
 - Scriptable Settings Provider for Scene Manager 

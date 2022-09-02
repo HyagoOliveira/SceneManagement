@@ -1,6 +1,7 @@
-#if UI_MODULE
 using UnityEngine;
+#if UI_MODULE
 using UnityEngine.UI;
+#endif
 
 namespace ActionCode.SceneManagement
 {
@@ -10,8 +11,10 @@ namespace ActionCode.SceneManagement
     [RequireComponent(typeof(Text))]
     public sealed class LoadingText : MonoBehaviour
     {
+#if UI_MODULE
         [SerializeField, Tooltip("The local Text component.")]
         private Text text;
+#endif
         [SerializeField, Tooltip("The Scene Manager.")]
         private SceneManager sceneManager;
 
@@ -21,8 +24,13 @@ namespace ActionCode.SceneManagement
         private void OnEnable() => sceneManager.OnProgressChanged += HandleProgressChanged;
         private void OnDisable() => sceneManager.OnProgressChanged -= HandleProgressChanged;
 
-        private void HandleProgressChanged(float progress) =>
-            text.text = string.Format(TEXT_FORMAT, progress);
+        private void HandleProgressChanged(float progress) => SetText(string.Format(TEXT_FORMAT, progress));
+
+        private void SetText(string text)
+        {
+#if UI_MODULE
+            this.text.text = string.Format(TEXT_FORMAT, text);
+#endif
+        }
     }
 }
-#endif

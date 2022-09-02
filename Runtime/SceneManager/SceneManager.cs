@@ -35,49 +35,49 @@ namespace ActionCode.SceneManagement
             }
         }
 
-        private IEnumerator LoadSceneCoroutine(string scene, SceneTransition data)
+        private IEnumerator LoadSceneCoroutine(string scene, SceneTransition transition)
         {
             if (IsLoading)
                 throw new Exception($"Cannot load {scene} since other scene is being loaded.");
 
-            if (data == null) data = CreateInstance<SceneTransition>();
+            if (transition == null) transition = CreateInstance<SceneTransition>();
 
-            data.Initialize();
+            transition.Initialize();
 
             IsLoading = true;
-            var hasLoadingScene = !string.IsNullOrEmpty(data.LoadingScene);
+            var hasLoadingScene = !string.IsNullOrEmpty(transition.LoadingScene);
 
-            yield return data.ScreenFader?.FadeOut();
+            yield return transition.ScreenFader?.FadeOut();
             IProgress<float> progress = new Progress<float>(ReportProgress);
 
             if (hasLoadingScene)
             {
-                // will automatically unload the previous Scene.
-                var loadingSceneOperation = UnitySceneManager.LoadSceneAsync(data.LoadingScene);
+                // Automatically unload the previous Scene.
+                var loadingSceneOperation = UnitySceneManager.LoadSceneAsync(transition.LoadingScene);
                 yield return loadingSceneOperation;
 
                 progress.Report(0F);
-                yield return data.ScreenFader?.FadeIn();
+                yield return transition.ScreenFader?.FadeIn();
             }
 
-            yield return new WaitForSeconds(data.TimeBeforeLoading);
+            yield return new WaitForSeconds(transition.TimeBeforeLoading);
 
             var loadingOperation = UnitySceneManager.LoadSceneAsync(scene);
             if (loadingOperation == null) yield break;
 
-            // will prevent to automatically unload the data.LoadingScene.
+            // Prevent to automatically unload the LoadingScene if any.
             loadingOperation.allowSceneActivation = false;
 
             yield return loadingOperation.WaitUntilActivationProgress(progress);
 
             progress.Report(1F);
-            yield return new WaitForSeconds(data.TimeAfterLoading);
+            yield return new WaitForSeconds(transition.TimeAfterLoading);
 
-            if (hasLoadingScene) yield return data.ScreenFader?.FadeOut();
+            if (hasLoadingScene) yield return transition.ScreenFader?.FadeOut();
 
-            // will automatically unload the data.LoadingScene.
+            // Automatically unload the LoadingScene if any.
             loadingOperation.allowSceneActivation = true;
-            yield return data.ScreenFader?.FadeIn();
+            yield return transition.ScreenFader?.FadeIn();
 
             IsLoading = false;
         }

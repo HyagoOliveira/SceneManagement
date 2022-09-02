@@ -19,13 +19,15 @@ namespace ActionCode.SceneManagement
 
         public bool IsLoading { get; private set; }
 
+        private void OnDisable() => IsLoading = false;
+
         public async Task LoadScene(string scene) => await LoadScene(scene, defaultTransition);
 
-        public async Task LoadScene(string scene, SceneTransition data)
+        public async Task LoadScene(string scene, SceneTransition transition)
         {
             try
             {
-                await AwaitableCoroutine.Run(LoadSceneCoroutine(scene, data));
+                await AwaitableCoroutine.Run(LoadSceneCoroutine(scene, transition));
             }
             catch (Exception)
             {
@@ -37,6 +39,10 @@ namespace ActionCode.SceneManagement
         {
             if (IsLoading)
                 throw new Exception($"Cannot load {scene} since other scene is being loaded.");
+
+            if (data == null) data = CreateInstance<SceneTransition>();
+
+            data.Initialize();
 
             IsLoading = true;
             var hasLoadingScene = !string.IsNullOrEmpty(data.LoadingScene);

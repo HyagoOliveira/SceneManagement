@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 using ActionCode.AwaitableCoroutines;
+using SceneMode = UnityEngine.SceneManagement.LoadSceneMode;
 using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 namespace ActionCode.SceneManagement
@@ -38,14 +39,14 @@ namespace ActionCode.SceneManagement
         private IEnumerator LoadSceneCoroutine(string scene, SceneTransition transition)
         {
             if (IsLoading)
-                throw new Exception($"Cannot load {scene} since other scene is being loaded.");
+                throw new Exception("Cannot load new Scene since other scene is being loaded.");
 
             if (transition == null) transition = CreateInstance<SceneTransition>();
 
             transition.Initialize();
 
             IsLoading = true;
-            var hasLoadingScene = !string.IsNullOrEmpty(transition.LoadingScene);
+            var hasLoadingScene = transition.HasValidLoadingScene();
 
             yield return transition.ScreenFader?.FadeOut();
             IProgress<float> progress = new Progress<float>(ReportProgress);
@@ -53,7 +54,7 @@ namespace ActionCode.SceneManagement
             if (hasLoadingScene)
             {
                 // Automatically unload the previous Scene.
-                var loadingSceneOperation = UnitySceneManager.LoadSceneAsync(transition.LoadingScene);
+                var loadingSceneOperation = UnitySceneManager.LoadSceneAsync(transition.LoadingScene, SceneMode.Single);
                 yield return loadingSceneOperation;
 
                 progress.Report(0F);
@@ -62,7 +63,9 @@ namespace ActionCode.SceneManagement
 
             yield return new WaitForSeconds(transition.TimeBeforeLoading);
 
-            var loadingOperation = UnitySceneManager.LoadSceneAsync(scene);
+            var loadingOperation = UnitySceneManager.LoadSceneAsync(scene, SceneMode.Additive);
+
+            // Check if scene was valid.
             if (loadingOperation == null) yield break;
 
             // Prevent to automatically unload the LoadingScene if any.

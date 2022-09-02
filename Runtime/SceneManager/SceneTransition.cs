@@ -50,11 +50,8 @@ namespace ActionCode.SceneManagement
         /// Whether <see cref="LoadingScene"/> is valid Scene.
         /// </summary>
         /// <returns>True if <see cref="LoadingScene"/> is valid Scene. False otherwise.</returns>
-        public bool HasValidLoadingScene() => IsValidScene(LoadingScene);
+        public bool HasValidLoadingScene() => !string.IsNullOrEmpty(LoadingScene);
 
         private IScreenFader FindOrCreateScreenFader() => ScreenFaderPool.Create(screenFaderPrefab);
-
-        private static bool IsValidScene(string path) => !string.IsNullOrEmpty(path) &&
-            UnityEngine.SceneManagement.SceneManager.GetSceneByPath(path).IsValid();
     }
 }

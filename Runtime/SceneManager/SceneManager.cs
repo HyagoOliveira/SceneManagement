@@ -24,17 +24,8 @@ namespace ActionCode.SceneManagement
 
         public async Task LoadScene(string scene) => await LoadScene(scene, defaultTransition);
 
-        public async Task LoadScene(string scene, SceneTransition transition)
-        {
-            try
-            {
-                await AwaitableCoroutine.Run(LoadSceneCoroutine(scene, transition));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        public async Task LoadScene(string scene, SceneTransition transition) =>
+            await AwaitableCoroutine.Run(LoadSceneCoroutine(scene, transition));
 
         private IEnumerator LoadSceneCoroutine(string scene, SceneTransition transition)
         {
@@ -55,6 +46,14 @@ namespace ActionCode.SceneManagement
             {
                 // Automatically unload the previous Scene.
                 var loadingSceneOperation = UnitySceneManager.LoadSceneAsync(transition.LoadingScene, SceneMode.Single);
+
+                // Check if LoadingScene was valid.
+                if (loadingSceneOperation == null)
+                {
+                    IsLoading = false;
+                    yield break;
+                }
+
                 yield return loadingSceneOperation;
 
                 progress.Report(0F);
@@ -66,7 +65,11 @@ namespace ActionCode.SceneManagement
             var loadingOperation = UnitySceneManager.LoadSceneAsync(scene);
 
             // Check if scene was valid.
-            if (loadingOperation == null) yield break;
+            if (loadingOperation == null)
+            {
+                IsLoading = false;
+                yield break;
+            }
 
             // Prevent to automatically unload the LoadingScene if any.
             loadingOperation.allowSceneActivation = false;
@@ -86,6 +89,5 @@ namespace ActionCode.SceneManagement
         }
 
         private void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);
-
     }
 }

@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 namespace ActionCode.SceneManagement.Editor
 {
     /// <summary>
-    /// Checks if the Loading Scene from all <see cref="SceneTransition"/> has been add to the build./>
+    /// Checks if the Loading Scene from all <see cref="SceneTransition"/> assets has been added to the Build./>
     /// </summary>
-    public sealed class SceneTransitionDataBuilder : IPreprocessBuildWithReport
+    public sealed class SceneTransitionBuilder : IPreprocessBuildWithReport
     {
         public int callbackOrder => 0;
 

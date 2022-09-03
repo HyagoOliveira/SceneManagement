@@ -9,7 +9,7 @@ using TMPro;
 namespace ActionCode.SceneManagement
 {
     /// <summary>
-    /// Updates a local <see cref="Text"/> with the current loading progress.
+    /// Updates local Texts components with the current loading progress.
     /// </summary>
     public sealed class LoadingText : MonoBehaviour
     {

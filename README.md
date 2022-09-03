@@ -21,8 +21,10 @@ Also, the current loading scene progress can be shown using a ``TMP_Text``, ```T
 
 ## How It Works
 
-In order to use the package, you must first create a SceneManager ScriptableObject asset and use it on your classes. 
-You can also create SceneTransition ScriptableObject assets to control how to Loading Process should happen.
+In order to use the package, you must first create a **SceneManager** ScriptableObject asset and use it on your scripts.
+SceneManager is a ScriptableObject to facilitate how your scripts reference it and avoid to use the Singleton pattern.
+
+To control how to Loading Process should happen, you can also create SceneTransition ScriptableObject assets and change its field. 
 
 ## How To Use
 
@@ -35,7 +37,17 @@ Click on the **Create** button and save a new Scene Manager asset.
 ![The Scene Manager Menu](/Documentation~/scene-manager-menu.png "The Scene Manager Menu")
 
 Click on the Create button next to Default Transition to create and assign a new SceneTransiion asset.
-You can manually create this asset by going in Asset > Create > ActionCode > SceneManager > Scene Transition. 
+This transition will be used by the SceneManager every time you don't specify a custom one to it.
+
+### Scene Transition ScriptableObject
+
+You can manually create Scene Transition ScriptableObject assets by going in Asset > Create > ActionCode > SceneManager > Scene Transition. 
+
+![The Scene Transition](/Documentation~/scene-transition.png "The Scene Transition")
+
+Every field has a describing Tooltip explaining it.
+
+You can create multiple transitions and use them in different parts of your game.
 
 ### Using Screen Faders
 
@@ -48,17 +60,16 @@ This package already provides two classes implementing this component:
 
 If those components do not meet your specifications, please feel free to create your own fade component and perhaps contribute to the package. :)
 
-Also, there are two prefabs created using those components at the [Prefabs](/Prefabs) folder. You can use those prefabs or create new prefabs variants using them.
+Also, there are two prefabs created using those components at the [Prefabs](/Prefabs/ScreenFaders/) folder. You can use those prefabs or create new prefabs variants using them.
 
 ### Loading new Scenes
 
-The example bellow shows how to load new scenes using Scene Loading Settings asset:
+The example bellow shows the simplest way to load a new scene using the SceneManager:
 
 ```csharp
 using UnityEngine;
 using ActionCode.SceneManagement;
 
-[DisallowMultipleComponent]
 public sealed class LoadingTest : MonoBehaviour
 {
     [Scene] public string sceneToLoad;
@@ -73,17 +84,19 @@ public sealed class LoadingTest : MonoBehaviour
 
 In this example, we are
 
-1. Using the [Scene](/Runtime/Attributes/SceneAttribute.cs) attribute on a ```string``` or ```int``` field to display an Object Field for Scene assets.
-2. Creating a reference for **SceneManager** asset and using it to load the ```sceneToLoad``` Scene using ```LoadScene()``` function. This is a asynchronous function so you can hold your code at that moment.
-
+1. Using the **Scene** attribute on a ```string``` or ```int``` field to display an Object Field for Scene assets.
+2. Creating a reference for **SceneManager** asset and using it to load the ```sceneToLoad``` Scene using ```LoadScene()``` function. 
+This is an asynchronous function so you can hold your code execution at that moment.
 
 ### Create Loading Scenes
 
-Inside your Loading Scene, you can use the [LoadingSlider](/Runtime/UI/LoadingSlider.cs) and/or [LoadingText](/Runtime/UI/LoadingText.cs) components to display the current loading progress.
+Inside your Loading Scene, you can use the [LoadingSlider](/Runtime/UI/LoadingSlider.cs) and/or [LoadingText](/Runtime/UI/LoadingText.cs) components to display the current loading progress. Note that in order to use it you must have installed into your project the UI module and/or TextMeshPro package.
 
 If you want to lock the next scene activation until an action is done, i.e., wait for an input or animation to be completely played inside your Loading Scene, you can use the ```SceneManager.LockLoading()``` function to do that. Don't forget to use ```SceneManager.UnlockLoading()``` to unlock the Loading Process.
 
-Finally, a [SceneTransitionBuilder](/Editor/Build/SceneTransitionBuilder.cs) *Pre Build Processor* was created to check if the **Loading Scene** from all SceneTransition assets has been added to the **Build Settings**. This make sure that you will never waste your time building your game to realize that you forget to add the Loading Scene to the build.
+### Build Processor
+
+A [SceneTransitionBuilder](/Editor/Build/SceneTransitionBuilder.cs) *Pre Build Processor* was created to check if the **Loading Scene** from all SceneTransition assets has been added to the **Build Settings**. This make sure that you will never waste your time building your game to realize that you forget to add the Loading Scene to the build.
 
 ## Installation
 

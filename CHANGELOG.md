@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - SceneTransition
 - TextMeshPro support
 - LoadSceneAfterTime
+- Attributes 2.1.0 package dependency
 
 ### Changed
 - Scriptable Settings Provider for Scene Manager 

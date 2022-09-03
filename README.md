@@ -13,42 +13,42 @@
 
 It's normal for most games to have multiple Scenes. A common user case is to switch between them in a nice way.
 
-This package contains a Scene Loader class which loads new Scenes using customized Screen Faders and Loading Scenes (Scenes created just to show loading progress). 
+This package contains a Scene Manager class which loads new Scenes using customized Screen Faders and Loading Scenes (Scenes created just to show the Loading Progress). 
 
-Also, the current loading scene progress can be shown using a ```Text``` or ```Slider``` UI component.
+Also, the current loading scene progress can be shown using a ``TMP_Text``, ```Text``` or ```Slider``` UI component.
 
-![alt text][load-scene-showcase]
+![Showcase](/Documentation~/load-scene-showcase.gif "Scene Manager")
+
+## How It Works
+
+In order to use the package, you must first create a SceneManager ScriptableObject asset and use it on your classes. 
+You can also create SceneTransition ScriptableObject assets to control how to Loading Process should happen.
 
 ## How To Use
 
-### Creating a Scene Manager Settings
+### Creating a Scene Manager ScriptableObject
 
 Open the **Project Settings** Windows and select Scene Manager (below ActionCode group).
 
-Click on the **Create** button and save a new Scene Manager Settings asset.
+Click on the **Create** button and save a new Scene Manager asset.
 
-You can use any loading methods from the static [SceneManager](/Runtime/Loading/SceneManager.cs) class. This class is inheriting from the default Unity ```SceneManager``` so you can use any of its methods as well.
+![The Scene Manager Menu](/Documentation~/scene-manager-menu.png "The Scene Manager Menu")
 
-![alt text][scene-loading-settings-inspector]
-
-Fill this asset and use it with any loading functions from ```SceneManager``` class (available example bellow). 
+Click on the Create button next to Default Transition to create and assign a new SceneTransiion asset.
+You can manually create this asset by going in Asset > Create > ActionCode > SceneManager > Scene Transition. 
 
 ### Using Screen Faders
 
-Scene Manager Settings assets have an attribute for a **Screen Fader**. This prefab must have a component implementing the [AbstractScreenFader](/Runtime/ScreenFaders/AbstractScreenFader.cs) component.
+SceneTransition assets have an attribute for a **Screen Fader Prefab**. This prefab must have a component implementing the [AbstractScreenFader](/Runtime/ScreenFaders/AbstractScreenFader.cs) component.
 
-This package provides two components implementing this component:
+This package already provides two classes implementing this component:
 
-1. [ScreenFaderAnimator](/Runtime/ScreenFaders/ScreenFaderAnimator.cs): fades the screen in and out using a local ```Animator``` component. Perfect to use when fading using animations.
-2. [ScreenFaderCanvas](/Runtime/ScreenFaders/ScreenFaderCanvas.cs): fades the screen in and out using a local ```CanvasGroup``` component. Use this script and set the attributes to choose how to fade a ```Canvas```.
+1. [AnimationScreenFader](/Runtime/ScreenFaders/AnimationScreenFader.cs): fades the screen in and out using a local ```Animation``` component. Perfect to use when fading using animations.
+2. [CanvasScreenFader](/Runtime/ScreenFaders/CanvasScreenFader.cs): fades the screen in and out using a local ```CanvasGroup``` component. Use this script and set the attributes to choose how to fade a ```Canvas```.
 
-If those components do not meet your specifications, please feel free to create your own fade component and contribute to the package. :)
+If those components do not meet your specifications, please feel free to create your own fade component and perhaps contribute to the package. :)
 
-Also, there is the [ScreenFaderCanvas](/Prefabs/ScreenFaderCanvas.prefab) prefab with the ```ScreenFaderCanvas``` component already applied to it.
-
-![alt text][screen-fader-canvas-prefab-inspector]
-
-You can use this prefab or create a prefab variant and change its ```Image``` color (the fade color) or ```Duration```.
+Also, there are two prefabs created using those components at the [Prefabs](/Prefabs) folder. You can use those prefabs or create new prefabs variants using them.
 
 ### Loading new Scenes
 
@@ -56,44 +56,34 @@ The example bellow shows how to load new scenes using Scene Loading Settings ass
 
 ```csharp
 using UnityEngine;
-using UnityEngine.UI;
 using ActionCode.SceneManagement;
 
-public sealed class SceneManagerTest : MonoBehaviour
+[DisallowMultipleComponent]
+public sealed class LoadingTest : MonoBehaviour
 {
-    [Scene] public string sceneToLoad = "SceneB";
-    public SceneLoadingSettings settings;
+    [Scene] public string sceneToLoad;
+    public SceneManager sceneManager;    
 
-    public Image panelImage;
-    public Color panelColor;
-
-    public void LoadScene() => SceneManager.LoadScene(sceneToLoad, settings);
-
-    public void GoPreviousScene() => SceneManager.LoadPreviousScene(settings);
-
-    public void GoNextScene() => SceneManager.LoadNextScene(settings);
-
-    public void FadeScreen() => SceneManager.FadeScreen(settings, SwapPanelColor);
-
-    public void SwapPanelColor() => panelImage.color = panelColor;
+    public async void Load()
+    {
+        await sceneManager.LoadScene(scenesToLoad);
+    }
 }
 ```
 
-![alt text][scene-manager-test-inspector]
+In this example, we are
 
-In this example, you can:
+1. Using the [Scene](/Runtime/Attributes/SceneAttribute.cs) attribute on a ```string``` or ```int``` field to display an Object Field for Scene assets.
+2. Creating a reference for **SceneManager** asset and using it to load the ```sceneToLoad``` Scene using ```LoadScene()``` function. This is a asynchronous function so you can hold your code at that moment.
 
-1. Use the [Scene](/Runtime/Attributes/SceneAttribute.cs) attribute on a ```string``` or ```int``` field to display an Object Field for Scene assets.
-2. Make a reference for your **SceneLoadingSettings** asset and use it to loading new scenes using ```SceneManager.LoadScene()``` functions.
-3. You can also just fades the screen without loading a new Scene using ```SceneManager.FadeScreen```. You may pass an action to it and it'll be executed when the screen fades out.
 
 ### Create Loading Scenes
 
-Inside your Loading Scene, you can use the [LoadingSlider](/Runtime/Transitions/LoadingSlider.cs) and/or [LoadingText](/Runtime/Transitions/LoadingText.cs) components to display the current loading progress.
+Inside your Loading Scene, you can use the [LoadingSlider](/Runtime/UI/LoadingSlider.cs) and/or [LoadingText](/Runtime/UI/LoadingText.cs) components to display the current loading progress.
 
-If you want to lock the next scene activation until an action is done, i.e., wait for an input or animation to be completely played inside your Loading Scene, you can set the ```SceneManager.LockNextScene``` property and do that.
+If you want to lock the next scene activation until an action is done, i.e., wait for an input or animation to be completely played inside your Loading Scene, you can use the ```SceneManager.LockLoading()``` function to do that. Don't forget to use ```SceneManager.UnlockLoading()``` to unlock the Loading Process.
 
-Finally, a [SceneLoadingBuilder](/Editor/Build/SceneLoadingBuilder.cs) *Pre Build Processor* was created to check if the **Loading Scene** from all SceneLoadingSettings assets has been add to the **Build Settings**. This make sure that you will never waste your time building your game to realize that you forget to add a particular Scene to the build.
+Finally, a [SceneTransitionBuilder](/Editor/Build/SceneTransitionBuilder.cs) *Pre Build Processor* was created to check if the **Loading Scene** from all SceneTransition assets has been added to the **Build Settings**. This make sure that you will never waste your time building your game to realize that you forget to add the Loading Scene to the build.
 
 ## Installation
 
@@ -121,8 +111,3 @@ You will need a **Git client** installed on your computer with the Path variable
 [BitBucket](https://bitbucket.org/HyagoGow/) -
 [LinkedIn](https://www.linkedin.com/in/hyago-oliveira/) -
 <hyagogow@gmail.com>
-
-[load-scene-showcase]: /Documentation~/load-scene-showcase.gif "Loading Scenes"
-[scene-loading-settings-inspector]: /Documentation~/scene-loading-settings-inspector.jpg "Scene Loading Settings"
-[screen-fader-canvas-prefab-inspector]: /Documentation~/screen-fader-canvas-prefab-inspector.jpg "Screen Fader Canvas Prefab"
-[scene-manager-test-inspector]: /Documentation~/scene-manager-test-inspector.jpg "Scene Manager Test Inspector"

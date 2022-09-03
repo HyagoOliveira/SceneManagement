@@ -13,7 +13,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - ScreenFaderPool
 - SceneTransition
 - TextMeshPro support
-- LoadSceneAfterTime
 - Attributes 2.1.0 package dependency
 - Lock/Unlock Loading Scene
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
+using ActionCode.Attributes;
 using ActionCode.AwaitableCoroutines;
 using SceneMode = UnityEngine.SceneManagement.LoadSceneMode;
 using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
@@ -13,6 +14,7 @@ namespace ActionCode.SceneManagement
     /// </summary>
     public sealed class SceneManager : ScriptableObject, ISceneManager
     {
+        [CreateButton(typeof(SceneTransition))]
         [Tooltip("De default Scene Transition values used when none is provided.")]
         public SceneTransition defaultTransition;
 

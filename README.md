@@ -24,7 +24,7 @@ Also, the current loading scene progress can be shown using a ``TMP_Text``, ```T
 In order to use the package, you must first create a **SceneManager** ScriptableObject asset and use it on your scripts.
 SceneManager is a ScriptableObject to facilitate how your scripts reference it and avoid to use the Singleton pattern.
 
-To control how to Loading Process should happen, you can also create SceneTransition ScriptableObject assets and change its field. 
+To control how to Loading Process should happen, you can also create SceneTransition ScriptableObject assets and change its fields. 
 
 ## How To Use
 
@@ -36,8 +36,8 @@ Click on the **Create** button and save a new Scene Manager asset.
 
 ![The Scene Manager Menu](/Documentation~/scene-manager-menu.png "The Scene Manager Menu")
 
-Click on the Create button next to Default Transition to create and assign a new SceneTransiion asset.
-This transition will be used by the SceneManager every time you don't specify a custom one to it.
+Click on the Create button next to Default Transition to create and assign a new SceneTransition asset to it.
+This transition will be used by the SceneManager every time you don't specify a custom one.
 
 ### Scene Transition ScriptableObject
 
@@ -47,7 +47,8 @@ You can manually create Scene Transition ScriptableObject assets by going in Ass
 
 Every field has a describing Tooltip explaining it.
 
-You can create multiple transitions and use them in different parts of your game.
+A common user case is to show a Loading Scene when going to different levels in your game and just fades the screen in/out when transit between menus.
+This can be done by creating multiples Scene Transition assets and use then to load those parts in your game.
 
 ### Using Screen Faders
 

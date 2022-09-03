@@ -47,7 +47,7 @@ namespace ActionCode.SceneManagement
             transition.Initialize();
 
             IsLoading = true;
-            var hasLoadingScene = transition.HasValidLoadingScene();
+            var hasLoadingScene = transition.HasLoadingScene();
 
             yield return transition.ScreenFader?.FadeOut();
             IProgress<float> progress = new Progress<float>(ReportProgress);

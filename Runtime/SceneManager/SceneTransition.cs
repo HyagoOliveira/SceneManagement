@@ -47,10 +47,10 @@ namespace ActionCode.SceneManagement
         }
 
         /// <summary>
-        /// Whether <see cref="LoadingScene"/> is valid Scene.
+        /// Whether <see cref="LoadingScene"/> is set.
         /// </summary>
-        /// <returns>True if <see cref="LoadingScene"/> is valid Scene. False otherwise.</returns>
-        public bool HasValidLoadingScene() => !string.IsNullOrEmpty(LoadingScene);
+        /// <returns>True if <see cref="LoadingScene"/> is set. False otherwise.</returns>
+        public bool HasLoadingScene() => !string.IsNullOrEmpty(LoadingScene);
 
         private IScreenFader FindOrCreateScreenFader() => ScreenFaderPool.Create(screenFaderPrefab);
     }

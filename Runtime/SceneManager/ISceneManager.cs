@@ -23,6 +23,11 @@ namespace ActionCode.SceneManagement
         bool IsLoading { get; }
 
         /// <summary>
+        /// Whether the Scene loading process is locked. 
+        /// </summary>
+        bool IsLoadingLocked { get; }
+
+        /// <summary>
         /// Loads the given Scene asynchronously while showing a default LoadingScene and fade transitions.
         /// </summary>
         /// <param name="scene">The name or path of the Scene to load.</param>
@@ -37,5 +42,18 @@ namespace ActionCode.SceneManagement
         /// <param name="transition">The transition data to use.</param>
         /// <returns><inheritdoc cref="LoadScene(string)"/></returns>
         Task LoadScene(string scene, SceneTransition transition);
+
+        /// <summary>
+        /// Locks the Scene loading process.
+        /// <para>
+        /// Use it to Lock into the Loading Scene until the <see cref="UnlockLoading"/> is called.
+        /// </para>
+        /// </summary>
+        void LockLoading();
+
+        /// <summary>
+        /// Unlocks the Scene loading process.
+        /// </summary>
+        void UnlockLoading();
     }
 }

@@ -21,13 +21,21 @@ namespace ActionCode.SceneManagement
         public event Action<float> OnProgressChanged;
 
         public bool IsLoading { get; private set; }
+        public bool IsLoadingLocked { get; private set; }
 
-        private void OnDisable() => IsLoading = false;
+        private void OnDisable()
+        {
+            IsLoading = false;
+            UnlockLoading();
+        }
 
         public async Task LoadScene(string scene) => await LoadScene(scene, defaultTransition);
 
         public async Task LoadScene(string scene, SceneTransition transition) =>
             await AwaitableCoroutine.Run(LoadSceneCoroutine(scene, transition));
+
+        public void LockLoading() => IsLoadingLocked = true;
+        public void UnlockLoading() => IsLoadingLocked = false;
 
         private IEnumerator LoadSceneCoroutine(string scene, SceneTransition transition)
         {
@@ -80,6 +88,7 @@ namespace ActionCode.SceneManagement
 
             progress.Report(1F);
             yield return new WaitForSeconds(transition.TimeAfterLoading);
+            yield return new WaitUntil(() => !IsLoadingLocked);
 
             if (hasLoadingScene) yield return transition.ScreenFader?.FadeOut();
 

@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.1] - 2023-03-10
 ### Changed
 - Fix CanvasScreenFader fade in code
 - Waits to loading operation is done to fade in
@@ -55,7 +56,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - README
 - Initial commit
 
-[Unreleased]: https://github.com/HyagoOliveira/SceneManagement/compare/2.0.0...main
+[Unreleased]: https://github.com/HyagoOliveira/SceneManagement/compare/2.0.1...main
+[2.0.1]: https://github.com/HyagoOliveira/SceneManagement/tree/2.0.1/
 [2.0.0]: https://github.com/HyagoOliveira/SceneManagement/tree/2.0.0/
 [1.0.1]: https://github.com/HyagoOliveira/SceneManagement/tree/1.0.1/
 [1.0.0]: https://github.com/HyagoOliveira/SceneManagement/tree/1.0.0/

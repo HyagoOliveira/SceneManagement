@@ -94,6 +94,9 @@ namespace ActionCode.SceneManagement
 
             // Automatically unload the LoadingScene if any.
             loadingOperation.allowSceneActivation = true;
+
+            yield return new WaitUntil(() => loadingOperation.isDone);
+
             yield return transition.ScreenFader?.FadeIn();
 
             IsLoading = false;

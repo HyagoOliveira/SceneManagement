@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Fix CanvasScreenFader fade in code
+- Waits to loading operation is done to fade in
 
 ## [2.0.0] - 2022-09-03
 ### Added

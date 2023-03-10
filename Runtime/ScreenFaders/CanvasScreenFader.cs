@@ -47,7 +47,7 @@ namespace ActionCode.SceneManagement
             {
                 var interpolation = currentFadeTime / duration;
                 canvasGroup.alpha = Mathf.Lerp(startAlpha, finalAlpha, interpolation);
-                currentFadeTime += Time.unscaledDeltaTime;
+                currentFadeTime += Time.deltaTime;
                 yield return null;
             }
             canvasGroup.alpha = finalAlpha;

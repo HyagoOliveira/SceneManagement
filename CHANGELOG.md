@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+- Fix CanvasScreenFader fade in code
+
 ## [2.0.0] - 2022-09-03
 ### Added
 - Awaitable Coroutines package 1.0.0

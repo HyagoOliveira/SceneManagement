@@ -18,6 +18,8 @@ namespace ActionCode.SceneManagement
         [Tooltip("De default Scene Transition values used when none is provided.")]
         public SceneTransition defaultTransition;
 
+        public event Action OnLoadingStarted;
+        public event Action OnLoadingFinished;
         public event Action<float> OnProgressChanged;
 
         public bool IsLoading { get; private set; }
@@ -47,6 +49,8 @@ namespace ActionCode.SceneManagement
             transition.Initialize();
 
             IsLoading = true;
+            OnLoadingStarted?.Invoke();
+
             var hasLoadingScene = transition.HasLoadingScene();
 
             yield return transition.ScreenFader?.FadeOut();
@@ -100,6 +104,7 @@ namespace ActionCode.SceneManagement
             yield return transition.ScreenFader?.FadeIn();
 
             IsLoading = false;
+            OnLoadingFinished?.Invoke();
         }
 
         private void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);

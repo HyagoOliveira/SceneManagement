@@ -12,6 +12,7 @@ namespace ActionCode.SceneManagement
     /// <summary>
     /// The Scene Manager. It loads new Scenes by first opening a LoadingScene and showing fade transitions.
     /// </summary>
+    [CreateAssetMenu(fileName = "SceneManager", menuName = "ActionCode/SceneManager/Scene Manager", order = 110)]
     public sealed class SceneManager : ScriptableObject, ISceneManager
     {
         [CreateButton(typeof(SceneTransition))]

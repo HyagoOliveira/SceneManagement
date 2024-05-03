@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [2.1.0] - 2024-05-03
 ### Added
 - OnLoadingStarted/Finished events
 
@@ -62,7 +64,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - README
 - Initial commit
 
-[Unreleased]: https://github.com/HyagoOliveira/SceneManagement/compare/2.0.2...main
+[Unreleased]: https://github.com/HyagoOliveira/SceneManagement/compare/2.1.0...main
+[2.1.0]: https://github.com/HyagoOliveira/SceneManagement/tree/2.1.0/
 [2.0.2]: https://github.com/HyagoOliveira/SceneManagement/tree/2.0.2/
 [2.0.1]: https://github.com/HyagoOliveira/SceneManagement/tree/2.0.1/
 [2.0.0]: https://github.com/HyagoOliveira/SceneManagement/tree/2.0.0/

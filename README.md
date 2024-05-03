@@ -2,7 +2,7 @@
 
 * Loads new Scenes using Screen Faders and Loading Scenes.
 * Unity minimum version: **2019.3**
-* Current version: **2.0.2**
+* Current version: **2.1.0**
 * License: **MIT**
 * Dependencies:
     - [com.actioncode.attributes : 2.1.0](https://github.com/HyagoOliveira/Attributes/tree/2.1.0)
@@ -65,7 +65,7 @@ Also, there are two prefabs created using those components at the [Prefabs](/Pre
 
 ### Loading new Scenes
 
-The example bellow shows the simplest way to load a new scene using the SceneManager:
+The example bellow shows the simplest way to load a new scene using the ```SceneManager```:
 
 ```csharp
 using UnityEngine;
@@ -98,6 +98,10 @@ If you want to lock the next scene activation until an action is done, i.e., wai
 ### Build Processor
 
 A [SceneTransitionBuilder](/Editor/Build/SceneTransitionBuilder.cs) *Pre Build Processor* was created to check if the **Loading Scene** from all SceneTransition assets has been added to the **Build Settings**. This make sure that you will never waste your time building your game to realize that you forget to add the Loading Scene to the build.
+
+### Scene Loading Events
+
+The SceneManager has **OnLoadingStarted**, **OnLoadingFinished** and **OnProgressChanged** events, invoked at the specific loading time. Use them in your game to execute actions before or after the Scene is loaded.
 
 ## Installation
 

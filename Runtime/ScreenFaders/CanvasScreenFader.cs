@@ -1,4 +1,3 @@
-#if UI_MODULE
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
@@ -54,4 +53,3 @@ namespace ActionCode.SceneManagement
         }
     }
 }
-#endif

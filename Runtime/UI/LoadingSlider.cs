@@ -1,4 +1,3 @@
-#if UI_MODULE
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,4 +30,3 @@ namespace ActionCode.SceneManagement
         private void HandleProgressChanged(float progress) => slider.value = progress;
     }
 }
-#endif

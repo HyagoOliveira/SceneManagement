@@ -1,54 +1,25 @@
-using UnityEngine;
-#if UI_MODULE
-using UnityEngine.UI;
-#endif
-#if TEXT_MESH_PRO_MODULE
 using TMPro;
-#endif
+using UnityEngine;
 
 namespace ActionCode.SceneManagement
 {
     /// <summary>
-    /// Updates local Texts components with the current loading progress.
+    /// Updates the local <see cref="TMP_Text"/> with the current loading progress.
     /// </summary>
+    [RequireComponent(typeof(TMP_Text))]
     public sealed class LoadingText : MonoBehaviour
     {
-#if UI_MODULE
-        [SerializeField, Tooltip("The local Text component.")]
-        private Text textUI;
-#endif
-#if UI_MODULE
         [SerializeField, Tooltip("The local Text component.")]
         private TMP_Text textMesh;
-#endif
         [SerializeField, Tooltip("The Scene Manager.")]
         private SceneManager sceneManager;
+        [Tooltip("The format used on the text update.")]
+        public string format = "{0} %";
 
-        public const string TEXT_FORMAT = "{0} %";
-
-        private void Reset()
-        {
-#if UI_MODULE
-            textUI = GetComponent<Text>();
-#endif
-#if UI_MODULE
-            textMesh = GetComponent<TMP_Text>();
-#endif
-        }
-
+        private void Reset() => textMesh = GetComponent<TMP_Text>();
         private void OnEnable() => sceneManager.OnProgressChanged += HandleProgressChanged;
         private void OnDisable() => sceneManager.OnProgressChanged -= HandleProgressChanged;
 
-        private void HandleProgressChanged(float progress) => SetText(string.Format(TEXT_FORMAT, progress));
-
-        private void SetText(string text)
-        {
-#if UI_MODULE
-            if (textUI) textUI.text = text;
-#endif
-#if UI_MODULE
-            if (textMesh) textMesh.text = text;
-#endif
-        }
+        private void HandleProgressChanged(float progress) => textMesh.text = string.Format(format, progress);
     }
 }

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - LoadScene function
 
 ### Changed
+- Remove transition field from LoadScene component
 - Rename function LoadScene -> LoadSceneAsync
 
 ### Removed

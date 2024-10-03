@@ -12,8 +12,6 @@ namespace ActionCode.SceneManagement
     {
         [Tooltip("The Scene Manager")]
         public SceneManager sceneManager;
-        [Tooltip("The scene transition data to use. The default one will be used if none is set.")]
-        public SceneTransition transition;
         [Tooltip("The new scene to load."), Scene]
         public string scene;
         [Tooltip("Time (in seconds) to wait before load the new scene."), Min(0F)]
@@ -46,9 +44,7 @@ namespace ActionCode.SceneManagement
         {
             // Using Coroutine because Task.Delay() is not supported in some Platforms (WebGL).
             yield return new WaitForSeconds(time);
-
-            if (transition) _ = sceneManager.LoadSceneAsync(scene, transition);
-            else _ = sceneManager.LoadSceneAsync(scene);
+            sceneManager.LoadScene(scene);
         }
     }
 }

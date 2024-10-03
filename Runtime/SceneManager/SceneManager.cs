@@ -32,9 +32,9 @@ namespace ActionCode.SceneManagement
             UnlockLoading();
         }
 
-        public async Task LoadScene(string scene) => await LoadScene(scene, defaultTransition);
+        public async Task LoadSceneAsync(string scene) => await LoadSceneAsync(scene, defaultTransition);
 
-        public async Task LoadScene(string scene, SceneTransition transition) =>
+        public async Task LoadSceneAsync(string scene, SceneTransition transition) =>
             await AwaitableCoroutine.Run(LoadSceneCoroutine(scene, transition));
 
         public void LockLoading() => IsLoadingLocked = true;

@@ -47,8 +47,8 @@ namespace ActionCode.SceneManagement
             // Using Coroutine because Task.Delay() is not supported in some Platforms (WebGL).
             yield return new WaitForSeconds(time);
 
-            if (transition) _ = sceneManager.LoadScene(scene, transition);
-            else _ = sceneManager.LoadScene(scene);
+            if (transition) _ = sceneManager.LoadSceneAsync(scene, transition);
+            else _ = sceneManager.LoadSceneAsync(scene);
         }
     }
 }

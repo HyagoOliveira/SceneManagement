@@ -32,16 +32,16 @@ namespace ActionCode.SceneManagement
         /// </summary>
         /// <param name="scene">The name or path of the Scene to load.</param>
         /// <returns>A task operation of the loading process.</returns>
-        Task LoadScene(string scene);
+        Task LoadSceneAsync(string scene);
 
         /// <summary>
         /// Loads the given Scene asynchronously while showing a LoadingScene and fade 
         /// transitions using the given transition data.
         /// </summary>
-        /// <param name="scene"><inheritdoc cref="LoadScene(string)"/></param>
+        /// <param name="scene"><inheritdoc cref="LoadSceneAsync(string)"/></param>
         /// <param name="transition">The transition data to use.</param>
-        /// <returns><inheritdoc cref="LoadScene(string)"/></returns>
-        Task LoadScene(string scene, SceneTransition transition);
+        /// <returns><inheritdoc cref="LoadSceneAsync(string)"/></returns>
+        Task LoadSceneAsync(string scene, SceneTransition transition);
 
         /// <summary>
         /// Locks the Scene loading process.

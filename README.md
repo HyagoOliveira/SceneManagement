@@ -1,8 +1,8 @@
 # Scene Management
 
 * Loads new Scenes using Screen Faders and Loading Scenes.
-* Unity minimum version: **2019.3**
-* Current version: **2.1.0**
+* Unity minimum version: **2022.3**
+* Current version: **3.0.0**
 * License: **MIT**
 * Dependencies:
     - [com.actioncode.attributes : 2.1.0](https://github.com/HyagoOliveira/Attributes/tree/2.1.0)
@@ -15,7 +15,7 @@ It's normal for most games to have multiple Scenes. A common user case is to swi
 
 This package contains a Scene Manager class which loads new Scenes using customized Screen Faders and Loading Scenes (Scenes created just to show the Loading Progress). 
 
-Also, the current loading scene progress can be shown using a ``TMP_Text``, ```Text``` or ```Slider``` UI component.
+Also, the current loading scene progress can be shown using a ``TMP_Text``, or ```Slider``` UI components.
 
 ![Showcase](/Documentation~/load-scene-showcase.gif "Scene Manager")
 
@@ -78,7 +78,7 @@ public sealed class LoadingTest : MonoBehaviour
 
     public async void Load()
     {
-        await sceneManager.LoadScene(scenesToLoad);
+        await sceneManager.LoadSceneAsync(scenesToLoad);
     }
 }
 ```
@@ -86,12 +86,12 @@ public sealed class LoadingTest : MonoBehaviour
 In this example, we are
 
 1. Using the **Scene** attribute on a ```string``` or ```int``` field to display an Object Field for Scene assets.
-2. Creating a reference for **SceneManager** asset and using it to load the ```sceneToLoad``` Scene using ```LoadScene()``` function. 
-This is an asynchronous function so you can hold your code execution at that moment.
+2. Creating a reference for **SceneManager** asset and using it to load the ```sceneToLoad``` Scene using ```LoadSceneAsync()``` function. 
+This is an asynchronous function so you can hold your code execution at that moment. You can also just use the no asynchronous ```LoadScene()``` function.
 
 ### Create Loading Scenes
 
-Inside your Loading Scene, you can use the [LoadingSlider](/Runtime/UI/LoadingSlider.cs) and/or [LoadingText](/Runtime/UI/LoadingText.cs) components to display the current loading progress. Note that in order to use it you must have installed into your project the UI module and/or TextMeshPro package.
+Inside your Loading Scene, you can use the [LoadingSlider](/Runtime/UI/LoadingSlider.cs) and/or [LoadingText](/Runtime/UI/LoadingText.cs) components to display the current loading progress. Note that in order to use it you must have installed into your project the UI module and TextMeshPro package.
 
 If you want to lock the next scene activation until an action is done, i.e., wait for an input or animation to be completely played inside your Loading Scene, you can use the ```SceneManager.LockLoading()``` function to do that. Don't forget to use ```SceneManager.UnlockLoading()``` to unlock the Loading Process.
 

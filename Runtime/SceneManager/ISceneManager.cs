@@ -28,6 +28,14 @@ namespace ActionCode.SceneManagement
         bool IsLoadingLocked { get; }
 
         /// <summary>
+        /// Loads the given Scene while showing a LoadingScene and fade 
+        /// transitions using the given transition data.
+        /// </summary>
+        /// <param name="scene">The name or path of the Scene to load.</param>
+        /// <param name="transition">The transition data to use.</param>
+        void LoadScene(string scene, SceneTransition transition = null);
+
+        /// <summary>
         /// Loads the given Scene asynchronously while showing a default LoadingScene and fade transitions.
         /// </summary>
         /// <param name="scene">The name or path of the Scene to load.</param>

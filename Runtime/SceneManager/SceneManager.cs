@@ -32,6 +32,9 @@ namespace ActionCode.SceneManagement
             UnlockLoading();
         }
 
+        public void LoadScene(string scene, SceneTransition transition = null) =>
+            _ = LoadSceneAsync(scene, transition != null ? transition : defaultTransition);
+
         public async Task LoadSceneAsync(string scene) => await LoadSceneAsync(scene, defaultTransition);
 
         public async Task LoadSceneAsync(string scene, SceneTransition transition) =>

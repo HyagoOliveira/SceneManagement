@@ -15,7 +15,7 @@ It's normal for most games to have multiple Scenes. A common user case is to swi
 
 This package contains a Scene Manager class which loads new Scenes using customized Screen Faders and Loading Scenes (Scenes created just to show the Loading Progress). 
 
-Also, the current loading scene progress can be shown using a ``TMP_Text``, or ```Slider``` UI components.
+Also, the current loading scene progress can be shown using a ``TMP_Text``, legacy ```Text```, or ```Slider``` UI components.
 
 ![Showcase](/Documentation~/load-scene-showcase.gif "Scene Manager")
 

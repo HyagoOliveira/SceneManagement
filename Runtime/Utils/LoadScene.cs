@@ -12,6 +12,10 @@ namespace ActionCode.SceneManagement
     {
         [Tooltip("The Scene Manager")]
         public SceneManager sceneManager;
+        [Tooltip("The scene transition to use. The default one will be used if none is set.")]
+        public SceneTransition transition;
+
+        [Space]
         [Tooltip("The new scene to load."), Scene]
         public string scene;
         [Tooltip("Time (in seconds) to wait before load the new scene."), Min(0F)]
@@ -27,24 +31,16 @@ namespace ActionCode.SceneManagement
         /// <summary>
         /// Loads the <see cref="scene"/>.
         /// <para>
-        /// If the local<see cref="transition"/> is not set, 
+        /// If the local <see cref="transition"/> is not set, 
         /// the <see cref="SceneManager.defaultTransition"/> will be used instead.
         /// </para>
         /// </summary>
-        public void Load() => Load(scene);
-
-        /// <summary>
-        /// Loads the given scene.
-        /// <para><inheritdoc cref="Load"/></para>
-        /// </summary>
-        /// <param name="scene">A Scene path or name to load.</param>
-        public void Load(string scene) => StartCoroutine(LoadCoroutine(scene));
+        public void Load() => StartCoroutine(LoadCoroutine(scene));
 
         private IEnumerator LoadCoroutine(string scene)
         {
-            // Using Coroutine because Task.Delay() is not supported in some Platforms (WebGL).
             yield return new WaitForSeconds(time);
-            sceneManager.LoadScene(scene);
+            sceneManager.LoadScene(scene, transition);
         }
     }
 }

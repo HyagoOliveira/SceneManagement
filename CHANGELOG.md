@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- Transition field from LoadScene component
+
 ### Changed
 - LoadingText updates text from Text and/or TextMeshPro
 

@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Removed
+- ISceneManager interface
+
 ## [3.1.0] - 2024-10-06
 ### Added
 - Transition field from LoadScene component

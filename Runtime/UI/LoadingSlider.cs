@@ -11,8 +11,6 @@ namespace ActionCode.SceneManagement
     {
         [SerializeField, Tooltip("The local Slider component.")]
         private Slider slider;
-        [SerializeField, Tooltip("The Scene Manager.")]
-        private SceneManager sceneManager;
 
         private void Reset()
         {
@@ -24,8 +22,8 @@ namespace ActionCode.SceneManagement
             slider.value = 50F;
         }
 
-        private void OnEnable() => sceneManager.OnProgressChanged += HandleProgressChanged;
-        private void OnDisable() => sceneManager.OnProgressChanged -= HandleProgressChanged;
+        private void OnEnable() => SceneManager.OnProgressChanged += HandleProgressChanged;
+        private void OnDisable() => SceneManager.OnProgressChanged -= HandleProgressChanged;
 
         private void HandleProgressChanged(float progress) => slider.value = progress;
     }

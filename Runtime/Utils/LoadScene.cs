@@ -10,8 +10,6 @@ namespace ActionCode.SceneManagement
     [DisallowMultipleComponent]
     public sealed class LoadScene : MonoBehaviour
     {
-        [Tooltip("The Scene Manager")]
-        public SceneManager sceneManager;
         [Tooltip("The scene transition to use. The default one will be used if none is set.")]
         public SceneTransition transition;
 
@@ -40,7 +38,7 @@ namespace ActionCode.SceneManagement
         private IEnumerator LoadCoroutine(string scene)
         {
             yield return new WaitForSeconds(time);
-            sceneManager.LoadScene(scene, transition);
+            SceneManager.LoadScene(scene, transition);
         }
     }
 }

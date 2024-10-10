@@ -38,7 +38,7 @@ namespace ActionCode.SceneManagement
         /// </summary>
         public IScreenFader ScreenFader => lazyFader.Value;
 
-        private Lazy<IScreenFader> lazyFader = new Lazy<IScreenFader>();
+        private Lazy<IScreenFader> lazyFader = new();
 
         internal void Initialize()
         {

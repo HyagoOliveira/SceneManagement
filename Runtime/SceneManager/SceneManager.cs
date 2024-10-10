@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
-using ActionCode.Attributes;
 using ActionCode.AwaitableCoroutines;
 using SceneMode = UnityEngine.SceneManagement.LoadSceneMode;
 using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
@@ -10,24 +9,20 @@ using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 namespace ActionCode.SceneManagement
 {
     /// <summary>
-    /// The Scene Manager. It loads new Scenes by first opening a LoadingScene and showing fade transitions.
+    /// The Scene Manager. 
+    /// It loads new Scenes by first opening a LoadingScene and showing fade transitions.
     /// </summary>
-    [CreateAssetMenu(fileName = "SceneManager", menuName = "ActionCode/SceneManager/Scene Manager", order = 110)]
-    public sealed class SceneManager : ScriptableObject
+    public static class SceneManager
     {
-        [CreateButton(typeof(SceneTransition))]
-        [Tooltip("De default Scene Transition values used when none is provided.")]
-        public SceneTransition defaultTransition;
-
         /// <summary>
         /// Action fired when loading is started.
         /// </summary>
-        public event Action OnLoadingStarted;
+        public static event Action OnLoadingStarted;
 
         /// <summary>
         /// Action fired when loading is finished.
         /// </summary>
-        public event Action OnLoadingFinished;
+        public static event Action OnLoadingFinished;
 
         /// <summary>
         /// Action fired when the loading progress changes.
@@ -36,44 +31,17 @@ namespace ActionCode.SceneManagement
         /// i.e. a number between 0F and 100F.
         /// </para>
         /// </summary>
-        public event Action<float> OnProgressChanged;
+        public static event Action<float> OnProgressChanged;
 
         /// <summary>
         /// Whether a Scene loading process is happening. 
         /// </summary>
-        public bool IsLoading { get; private set; }
+        public static bool IsLoading { get; private set; }
 
         /// <summary>
         /// Whether the Scene loading process is locked. 
         /// </summary>
-        public bool IsLoadingLocked { get; private set; }
-
-        private void OnDisable()
-        {
-            IsLoading = false;
-            UnlockLoading();
-        }
-
-        /// <summary>
-        /// Loads the given Scene while showing a LoadingScene and fade 
-        /// transitions using the given transition data.
-        /// </summary>
-        /// <param name="scene">The name or path of the Scene to load.</param>
-        /// <param name="transition">The transition data to use.</param>
-        public void LoadScene(string scene, SceneTransition transition = null) =>
-            _ = LoadSceneAsync(scene, transition != null ? transition : defaultTransition);
-
-        public async Task LoadSceneAsync(string scene) => await LoadSceneAsync(scene, defaultTransition);
-
-        /// <summary>
-        /// Loads the given Scene asynchronously while showing a LoadingScene and fade 
-        /// transitions using the given transition data.
-        /// </summary>
-        /// <param name="scene"><inheritdoc cref="LoadSceneAsync(string)"/></param>
-        /// <param name="transition">The transition data to use.</param>
-        /// <returns><inheritdoc cref="LoadSceneAsync(string)"/></returns>
-        public async Task LoadSceneAsync(string scene, SceneTransition transition) =>
-            await AwaitableCoroutine.Run(LoadSceneCoroutine(scene, transition));
+        public static bool IsLoadingLocked { get; private set; }
 
         /// <summary>
         /// Locks the Scene loading process.
@@ -81,19 +49,37 @@ namespace ActionCode.SceneManagement
         /// Use it to lock into the Loading Scene until the <see cref="UnlockLoading"/> is called.
         /// </para>
         /// </summary>
-        public void LockLoading() => IsLoadingLocked = true;
+        public static void LockLoading() => IsLoadingLocked = true;
 
         /// <summary>
         /// Unlocks the Scene loading process.
         /// </summary>
-        public void UnlockLoading() => IsLoadingLocked = false;
+        public static void UnlockLoading() => IsLoadingLocked = false;
 
-        private IEnumerator LoadSceneCoroutine(string scene, SceneTransition transition)
+        /// <summary>
+        /// Loads the given Scene using a Loading Scene and fade transitions.
+        /// </summary>
+        /// <param name="scene">The name or path of the Scene to load.</param>
+        /// <param name="transition">The transition data to use.</param>
+        public static void LoadScene(string scene, SceneTransition transition = null) =>
+            _ = LoadSceneAsync(scene, transition);
+
+        /// <summary>
+        /// Loads the given Scene asynchronously using a Loading Scene and fade transitions.
+        /// </summary>
+        /// <param name="scene">The name or path of the Scene to load</param>
+        /// <param name="transition">The transition data to use.</param>
+        /// <returns>An asynchronously Task.</returns>
+        public static async Task LoadSceneAsync(string scene, SceneTransition transition = null) =>
+            await AwaitableCoroutine.Run(LoadSceneCoroutine(scene, transition));
+
+
+        private static IEnumerator LoadSceneCoroutine(string scene, SceneTransition transition)
         {
             if (IsLoading)
                 throw new Exception("Cannot load new Scene since other scene is being loaded.");
 
-            if (transition == null) transition = CreateInstance<SceneTransition>();
+            if (transition == null) transition = ScriptableObject.CreateInstance<SceneTransition>();
 
             transition.Initialize();
 
@@ -156,6 +142,6 @@ namespace ActionCode.SceneManagement
             OnLoadingFinished?.Invoke();
         }
 
-        private void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);
+        private static void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);
     }
 }

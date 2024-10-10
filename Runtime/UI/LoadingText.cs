@@ -21,8 +21,6 @@ namespace ActionCode.SceneManagement
     [DisallowMultipleComponent]
     public sealed class LoadingText : MonoBehaviour
     {
-        [SerializeField, Tooltip("The Scene Manager.")]
-        private SceneManager sceneManager;
         [Tooltip("The format used on the text update.")]
         public string format = "{0} %";
 #if TMP_AVAILABLE
@@ -44,8 +42,8 @@ namespace ActionCode.SceneManagement
 #endif
         }
 
-        private void OnEnable() => sceneManager.OnProgressChanged += HandleProgressChanged;
-        private void OnDisable() => sceneManager.OnProgressChanged -= HandleProgressChanged;
+        private void OnEnable() => SceneManager.OnProgressChanged += HandleProgressChanged;
+        private void OnDisable() => SceneManager.OnProgressChanged -= HandleProgressChanged;
 
         private void HandleProgressChanged(float progress) => SetText(string.Format(format, progress));
 

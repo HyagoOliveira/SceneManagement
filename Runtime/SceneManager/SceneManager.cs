@@ -73,7 +73,6 @@ namespace ActionCode.SceneManagement
         public static async Task LoadSceneAsync(string scene, SceneTransition transition = null) =>
             await AwaitableCoroutine.Run(LoadSceneCoroutine(scene, transition));
 
-
         private static IEnumerator LoadSceneCoroutine(string scene, SceneTransition transition)
         {
             if (IsLoading)

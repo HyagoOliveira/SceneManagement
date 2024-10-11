@@ -20,7 +20,7 @@ Also, the current loading scene progress can be shown using a ``TMP_Text``, lega
 
 ## How It Works
 
-You can load Scenes using the static class ![SceneManager](/Runtime/SceneManager/SceneManager.cs) or using [LoadScene](/Runtime/Utils/LoadScene.cs) component.
+You can load Scenes using the static class [SceneManager](/Runtime/SceneManager/SceneManager.cs) or using [LoadScene](/Runtime/Utils/LoadScene.cs) component.
 
 To control how the Loading Process should happen, you can create a SceneTransition ScriptableObject asset and change its fields. 
 
@@ -54,7 +54,7 @@ Also, there are two prefabs created using those components at the [Prefabs](/Pre
 
 ### Loading new Scenes by Code
 
-You just need to use any of the loading function provided by the static class ![SceneManager](/Runtime/SceneManager/SceneManager.cs).
+You just need to use any of the loading function provided by the static class [SceneManager](/Runtime/SceneManager/SceneManager.cs).
 
 ```csharp
 using UnityEngine;
@@ -80,7 +80,7 @@ In this example, we are
 
 1. Using the **Scene** attribute on a ```string``` or ```int``` field to display an Object Field to find a Scene asset.
 2. Using the asynchronous function ```LoadSceneAsync``` to load a Scene asynchronously and hold your code execution at that moment.
-3. Using the function ```LoadScene``` lo load a Scene synchronously.
+3. Using the function ```LoadScene``` to load a Scene synchronously.
 
 Both load functions receive a ```SceneTransition``` parameter that can be null.
 

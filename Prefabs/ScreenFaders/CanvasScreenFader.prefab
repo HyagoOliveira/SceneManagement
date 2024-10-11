@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6327534569764833942}
   - component: {fileID: 1383721323032323229}
   - component: {fileID: 4610612560865649602}
-  - component: {fileID: 4610612560865649614}
   - component: {fileID: 231560885327089098}
+  - component: {fileID: 1933798585492047608}
   m_Layer: 0
   m_Name: CanvasScreenFader
   m_TagString: Untagged
@@ -34,7 +34,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -58,7 +57,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1000
   m_TargetDisplay: 0
@@ -82,21 +83,6 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &4610612560865649614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4610612560865649615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c9f2ef6357de4a4c88bb4723f9c9407, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image: {fileID: 231560885327089098}
-  canvasGroup: {fileID: 4610612560865649602}
-  duration: 0.5
 --- !u!114 &231560885327089098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,3 +110,18 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &1933798585492047608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4610612560865649615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c9f2ef6357de4a4c88bb4723f9c9407, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 231560885327089098}
+  canvasGroup: {fileID: 4610612560865649602}
+  duration: 0.5

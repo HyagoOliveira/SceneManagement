@@ -63,6 +63,7 @@ using ActionCode.SceneManagement;
 public sealed class LoadingTest : MonoBehaviour
 {
     [Scene] public string sceneToLoad;
+    public Scene otherScene;
     public SceneTransition sceneTransition;
 
     public async void LoadAsync()
@@ -72,15 +73,16 @@ public sealed class LoadingTest : MonoBehaviour
         // do other things here after scene is loaded
     }
 
-    public void Load() => SceneManager.LoadScene(sceneToLoad, sceneTransition);   
+    public void LoadOther() => SceneManager.LoadScene(otherScene, sceneTransition);   
 }
 ```
 
 In this example, we are
 
 1. Using the **Scene** attribute on a ```string``` or ```int``` field to display an Object Field to find a Scene asset.
-2. Using the asynchronous function ```LoadSceneAsync``` to load a Scene asynchronously and hold your code execution at that moment.
-3. Using the function ```LoadScene``` to load a Scene synchronously.
+2. You can also use **Scene** class to display an Object Field to find a Scene asset.
+3. Using the asynchronous function ```LoadSceneAsync``` to load a Scene asynchronously and hold your code execution at that moment.
+4. Using the function ```LoadScene``` to load a Scene synchronously.
 
 Both load functions receive a ```SceneTransition``` parameter that can be null.
 

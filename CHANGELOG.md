@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.2.0] - 2025-04-12
 ### Added
 - LoadingLabel component
 - LoadingProgressBar component
@@ -103,7 +104,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - README
 - Initial commit
 
-[Unreleased]: https://github.com/HyagoOliveira/SceneManagement/compare/4.1.0...main
+[Unreleased]: https://github.com/HyagoOliveira/SceneManagement/compare/4.2.0...main
+[4.2.0]: https://github.com/HyagoOliveira/SceneManagement/tree/4.2.0/
 [4.1.0]: https://github.com/HyagoOliveira/SceneManagement/tree/4.1.0/
 [4.0.0]: https://github.com/HyagoOliveira/SceneManagement/tree/4.0.0/
 [3.1.0]: https://github.com/HyagoOliveira/SceneManagement/tree/3.1.0/

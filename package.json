@@ -1,7 +1,7 @@
 {
   "name": "com.actioncode.scene-management",
   "displayName": "ActionCode-Scene Management",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "unity": "2022.3",
   "description": "This package loads new Scenes using Screen Faders and Loading Scenes.",
   "keywords": [

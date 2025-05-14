@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [4.3.0] - 2025-05-14
 ### Changed
 - Reset TimeScale before load scene
 
@@ -106,7 +108,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - README
 - Initial commit
 
-[Unreleased]: https://github.com/HyagoOliveira/SceneManagement/compare/4.2.0...main
+[Unreleased]: https://github.com/HyagoOliveira/SceneManagement/compare/4.3.0...main
+[4.3.0]: https://github.com/HyagoOliveira/SceneManagement/tree/4.3.0/
 [4.2.0]: https://github.com/HyagoOliveira/SceneManagement/tree/4.2.0/
 [4.1.0]: https://github.com/HyagoOliveira/SceneManagement/tree/4.1.0/
 [4.0.0]: https://github.com/HyagoOliveira/SceneManagement/tree/4.0.0/

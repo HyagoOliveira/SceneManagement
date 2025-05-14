@@ -2,7 +2,7 @@
 
 * Loads new Scenes using Screen Faders and Loading Scenes.
 * Unity minimum version: **2022.3**
-* Current version: **4.2.0**
+* Current version: **4.3.0**
 * License: **MIT**
 * Dependencies:
     - [com.actioncode.attributes : 2.1.0](https://github.com/HyagoOliveira/Attributes/tree/2.1.0)

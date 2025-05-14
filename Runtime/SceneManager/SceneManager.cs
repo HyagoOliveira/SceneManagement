@@ -110,6 +110,8 @@ namespace ActionCode.SceneManagement
 
         private static IEnumerator LoadSceneCoroutine(Scene scene, SceneTransition transition)
         {
+            Time.timeScale = 1f;
+
             if (IsLoading)
                 throw new Exception($"Cannot load {scene} since {LoadingScene} is being loaded.");
 

@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Update Attributes package dependency to 3.1.0
 
+### Removed
+- Awaitable Coroutines package dependency
+
 ## [4.3.0] - 2025-05-14
 ### Changed
 - Reset TimeScale before load scene

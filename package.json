@@ -22,7 +22,7 @@
     "email": "hyagogow@gmail.com"
   },
   "dependencies": {
-    "com.actioncode.attributes": "2.1.0",
+    "com.actioncode.attributes": "3.1.0",
     "com.actioncode.awaitable-coroutines": "1.0.0"
   }
 }

@@ -63,18 +63,6 @@ namespace ActionCode.SceneManagement
         public static void UnlockLoading() => IsLoadingLocked = false;
 
         /// <summary>
-        /// Quits the game or stops it while in Editor.
-        /// </summary>
-        public static void QuitGame()
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
-        }
-
-        /// <summary>
         /// Loads the given Scene using a Loading Scene and fade transitions.
         /// </summary>
         /// <param name="scene">The name or path of the Scene to load.</param>

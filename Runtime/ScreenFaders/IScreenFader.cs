@@ -1,4 +1,4 @@
-using System.Collections;
+using UnityEngine;
 
 namespace ActionCode.SceneManagement
 {
@@ -11,12 +11,12 @@ namespace ActionCode.SceneManagement
         /// Fades the screen in (the Scene content will appear).
         /// </summary>
         /// <returns>An enumerator that will be completed when all screen content appears.</returns>
-        IEnumerator FadeIn();
+        Awaitable FadeInAsync();
 
         /// <summary>
         /// Fades the screen out (the Scene content will disappear).
         /// </summary>
         /// <returns>An enumerator that will be completed when all screen content disappears.</returns>
-        IEnumerator FadeOut();
+        Awaitable FadeOutAsync();
     }
 }

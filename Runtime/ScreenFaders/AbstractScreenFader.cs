@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 namespace ActionCode.SceneManagement
 {
@@ -9,7 +8,7 @@ namespace ActionCode.SceneManagement
     [RequireComponent(typeof(Canvas))]
     public abstract class AbstractScreenFader : MonoBehaviour, IScreenFader
     {
-        public abstract IEnumerator FadeIn();
-        public abstract IEnumerator FadeOut();
+        public abstract Awaitable FadeInAsync();
+        public abstract Awaitable FadeOutAsync();
     }
 }

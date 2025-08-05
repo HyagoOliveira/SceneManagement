@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Update Attributes package dependency to 3.1.0
 - Increase Unity minimum version to 6000.1
+- Replace asynchronously Task Load functions by Awaitable
 
 ### Removed
 - Awaitable Coroutines package dependency

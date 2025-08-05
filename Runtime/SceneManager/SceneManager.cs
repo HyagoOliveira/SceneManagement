@@ -32,11 +32,6 @@ namespace ActionCode.SceneManagement
         public static event Action<float> OnProgressChanged;
 
         /// <summary>
-        /// Whether a Scene loading process is happening. 
-        /// </summary>
-        public static bool IsLoading => LoadingScene != null;
-
-        /// <summary>
         /// Whether the Scene loading process is locked. 
         /// </summary>
         public static bool IsLoadingLocked { get; private set; }
@@ -45,6 +40,11 @@ namespace ActionCode.SceneManagement
         /// The current Scene been loaded.
         /// </summary>
         public static Scene LoadingScene { get; private set; }
+
+        /// <summary>
+        /// Whether a Scene loading process is happening. 
+        /// </summary>
+        public static bool IsLoading() => LoadingScene != null;
 
         /// <summary>
         /// Locks the Scene loading process.
@@ -92,9 +92,26 @@ namespace ActionCode.SceneManagement
         /// <returns><inheritdoc cref="LoadSceneAsync(string, SceneTransition)"/></returns>
         public static async Awaitable LoadSceneAsync(Scene scene, SceneTransition transition = null)
         {
+            try
+            {
+                await LoadSceneAsync_Internal(scene, transition);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                LoadingScene = null;
+                OnLoadingFinished?.Invoke();
+            }
+        }
+
+        public static async Awaitable LoadSceneAsync_Internal(Scene scene, SceneTransition transition)
+        {
             Time.timeScale = 1f;
 
-            if (IsLoading)
+            if (IsLoading())
                 throw new Exception($"Cannot load {scene} since {LoadingScene} is being loaded.");
 
             if (transition == null) transition = ScriptableObject.CreateInstance<SceneTransition>();
@@ -113,13 +130,10 @@ namespace ActionCode.SceneManagement
             {
                 // Automatically unload the previous Scene.
                 var loadingSceneOperation = UnitySceneManager.LoadSceneAsync(transition.LoadingScene, SceneMode.Single);
+                var hasInvalidLoadingScene = loadingSceneOperation == null;
 
-                // Check if LoadingScene was valid.
-                if (loadingSceneOperation == null)
-                {
-                    LoadingScene = null;
-                    return;
-                }
+                if (hasInvalidLoadingScene)
+                    throw new Exception($"Loading Scene {LoadingScene} is invalid.");
 
                 await loadingSceneOperation;
 
@@ -130,13 +144,10 @@ namespace ActionCode.SceneManagement
             await Awaitable.WaitForSecondsAsync(transition.TimeBeforeLoading);
 
             var loadingOperation = UnitySceneManager.LoadSceneAsync(scene.path);
+            var hasInvalidScene = loadingOperation == null;
 
-            // Check if scene was valid.
-            if (loadingOperation == null)
-            {
-                LoadingScene = null;
-                return;
-            }
+            if (hasInvalidScene)
+                throw new Exception($"Scene {scene.path} is invalid.");
 
             // Prevent to automatically unload the LoadingScene if any.
             loadingOperation.allowSceneActivation = false;
@@ -155,9 +166,6 @@ namespace ActionCode.SceneManagement
 
             await WaitUntilAsync(() => loadingOperation.isDone);
             await transition.ScreenFader?.FadeInAsync();
-
-            LoadingScene = null;
-            OnLoadingFinished?.Invoke();
         }
 
         private static void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);

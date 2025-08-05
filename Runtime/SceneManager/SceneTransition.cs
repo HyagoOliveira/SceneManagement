@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace ActionCode.SceneManagement
@@ -36,14 +35,12 @@ namespace ActionCode.SceneManagement
         /// <summary>
         /// The ScreenFader instance ready to be used to fade the screen in/out.
         /// </summary>
-        public IScreenFader ScreenFader => lazyFader.Value;
-
-        private Lazy<IScreenFader> lazyFader = new();
+        public AbstractScreenFader ScreenFader { get; private set; }
 
         internal void Initialize()
         {
-            if (lazyFader.IsValueCreated) return;
-            lazyFader = new Lazy<IScreenFader>(FindOrCreateScreenFader);
+            var hasInvalidFader = ScreenFader == null;
+            if (hasInvalidFader) ScreenFader = ScreenFaderPool.Create(screenFaderPrefab);
         }
 
         /// <summary>
@@ -51,7 +48,5 @@ namespace ActionCode.SceneManagement
         /// </summary>
         /// <returns>True if <see cref="LoadingScene"/> is set. False otherwise.</returns>
         public bool HasLoadingScene() => !string.IsNullOrEmpty(LoadingScene);
-
-        private IScreenFader FindOrCreateScreenFader() => ScreenFaderPool.Create(screenFaderPrefab);
     }
 }

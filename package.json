@@ -2,7 +2,7 @@
   "name": "com.actioncode.scene-management",
   "displayName": "ActionCode-Scene Management",
   "version": "4.3.0",
-  "unity": "2022.3",
+  "unity": "6000.1",
   "description": "This package loads new Scenes using Screen Faders and Loading Scenes.",
   "keywords": [
     "Loading",
@@ -22,7 +22,6 @@
     "email": "hyagogow@gmail.com"
   },
   "dependencies": {
-    "com.actioncode.attributes": "3.1.0",
-    "com.actioncode.awaitable-coroutines": "1.0.0"
+    "com.actioncode.attributes": "3.1.0"
   }
 }

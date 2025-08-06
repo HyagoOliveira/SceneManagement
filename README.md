@@ -2,7 +2,7 @@
 
 * Loads new Scenes using Screen Faders and Loading Scenes.
 * Unity minimum version: **6000.0**
-* Current version: **4.3.0**
+* Current version: **5.0.0**
 * License: **MIT**
 * Dependencies:
     - [com.actioncode.attributes : 3.1.0](https://github.com/HyagoOliveira/Attributes/tree/3.1.0)
@@ -83,7 +83,9 @@ In this example, we are
 3. Using the asynchronous function ```LoadSceneAsync``` to load a Scene asynchronously and hold your code execution at that moment.
 4. Using the function ```LoadScene``` to load a Scene synchronously.
 
-Both load functions receive a ```SceneTransition``` parameter that can be null.
+Both load functions receive a ```SceneTransition``` parameter that can be null. 
+
+SceneManager load functions uses `Awaitable` to load scenes asynchronously. You can await your code execution.
 
 ### Create Loading Scenes
 

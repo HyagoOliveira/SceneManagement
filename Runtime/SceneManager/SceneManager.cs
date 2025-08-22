@@ -123,7 +123,7 @@ namespace ActionCode.SceneManagement
 
             var hasLoadingScene = transition.HasLoadingScene();
 
-            await transition.ScreenFader?.FadeOutAsync();
+            if (transition.ScreenFader) await transition.ScreenFader.FadeOutAsync();
             IProgress<float> progress = new Progress<float>(ReportProgress);
 
             if (hasLoadingScene)
@@ -138,7 +138,7 @@ namespace ActionCode.SceneManagement
                 await loadingSceneOperation;
 
                 progress.Report(0F);
-                await transition.ScreenFader?.FadeInAsync();
+                if (transition.ScreenFader) await transition.ScreenFader.FadeInAsync();
             }
 
             await Awaitable.WaitForSecondsAsync(transition.TimeBeforeLoading);
@@ -159,13 +159,14 @@ namespace ActionCode.SceneManagement
             await Awaitable.WaitForSecondsAsync(transition.TimeAfterLoading);
             await WaitUntilAsync(() => !IsLoadingLocked);
 
-            if (hasLoadingScene) await transition.ScreenFader?.FadeOutAsync();
+            if (hasLoadingScene && transition.ScreenFader)
+                await transition.ScreenFader.FadeOutAsync();
 
             // Automatically unload the LoadingScene if any.
             loadingOperation.allowSceneActivation = true;
 
             await WaitUntilAsync(() => loadingOperation.isDone);
-            await transition.ScreenFader?.FadeInAsync();
+            if (transition.ScreenFader) await transition.ScreenFader.FadeInAsync();
         }
 
         private static void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);

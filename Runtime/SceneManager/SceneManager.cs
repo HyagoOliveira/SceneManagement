@@ -41,6 +41,9 @@ namespace ActionCode.SceneManagement
         /// </summary>
         public static Scene LoadingScene { get; private set; }
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void Initialize() => LoadingScene = null;
+
         /// <summary>
         /// Whether a Scene loading process is happening. 
         /// </summary>

@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- LoadScene null exception when the game is exited from loading scene
+
 ## [5.0.0] - 2025-08-06
 ### Changed
 - Update Attributes package dependency to 3.1.0

@@ -147,8 +147,8 @@ namespace ActionCode.SceneManagement
 
             // Automatically unload the LoadingScene if any.
             loading.allowSceneActivation = true;
-
             await WaitUntilAsync(() => loading.isDone);
+            await WaitForSceneLoader();
             if (transition.ScreenFader) await transition.ScreenFader.FadeInAsync();
 
             // LoadingScene is set to null in the LoadSceneAsync finally block.
@@ -181,6 +181,14 @@ namespace ActionCode.SceneManagement
         private static async Awaitable WaitUntilAsync(Func<bool> condition)
         {
             while (!condition()) await Awaitable.NextFrameAsync();
+        }
+
+        private static async Awaitable WaitForSceneLoader()
+        {
+            var loader = UnityEngine.Object.FindAnyObjectByType<SceneLoader>();
+            if (loader == null) return;
+
+            while (!loader.IsLoaded) await Awaitable.NextFrameAsync();
         }
 
         private static void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);

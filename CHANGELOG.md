@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+- LoadSceneAsync waits for SceneLoader before fade out
 - SceneLoader Component and Prefab
 - ISceneLoadable interface
 

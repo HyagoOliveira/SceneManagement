@@ -111,9 +111,7 @@ namespace ActionCode.SceneManagement
         {
             Time.timeScale = 1f;
 
-            if (IsLoading())
-                throw new Exception($"Cannot load {scene} since {LoadingScene} is being loaded.");
-
+            if (IsLoading()) throw new Exception($"Cannot load {scene} since {LoadingScene} is being loaded.");
             if (transition == null) transition = ScriptableObject.CreateInstance<SceneTransition>();
 
             transition.Initialize();
@@ -121,61 +119,67 @@ namespace ActionCode.SceneManagement
             LoadingScene = scene;
             OnLoadingStarted?.Invoke();
 
-            var hasLoadingScene = transition.HasLoadingScene();
-
             if (transition.ScreenFader) await transition.ScreenFader.FadeOutAsync();
+
             IProgress<float> progress = new Progress<float>(ReportProgress);
+            var hasLoadingScene = transition.HasLoadingScene();
 
             if (hasLoadingScene)
             {
-                // Automatically unload the previous Scene.
-                var loadingSceneOperation = UnitySceneManager.LoadSceneAsync(transition.LoadingScene, SceneMode.Single);
-                var hasInvalidLoadingScene = loadingSceneOperation == null;
-
-                if (hasInvalidLoadingScene)
-                    throw new Exception($"Loading Scene {LoadingScene} is invalid.");
-
-                await loadingSceneOperation;
-
+                await LoadTransitionSceneAsync(transition.LoadingScene);
                 progress.Report(0F);
                 if (transition.ScreenFader) await transition.ScreenFader.FadeInAsync();
             }
 
             await Awaitable.WaitForSecondsAsync(transition.TimeBeforeLoading);
-
-            var loadingOperation = UnitySceneManager.LoadSceneAsync(scene.path);
-            var hasInvalidScene = loadingOperation == null;
-
-            if (hasInvalidScene)
-                throw new Exception($"Scene {scene.path} is invalid.");
-
-            // Prevent to automatically unload the LoadingScene if any.
-            loadingOperation.allowSceneActivation = false;
-
-            await loadingOperation.WaitUntilActivationProgress(progress);
+            var loading = await LoadSceneAsync(scene.path, progress);
 
             progress.Report(1F);
 
             await Awaitable.WaitForSecondsAsync(transition.TimeAfterLoading);
-            await WaitUntilAsync(() => !IsLoadingLocked);
+            await WaitUntilAsync(() => !IsLoadingLocked); // Game custom lock.
 
-            if (hasLoadingScene && transition.ScreenFader)
-                await transition.ScreenFader.FadeOutAsync();
+            var canFadeOut = hasLoadingScene && transition.ScreenFader;
+            if (canFadeOut) await transition.ScreenFader.FadeOutAsync();
 
             // Automatically unload the LoadingScene if any.
-            loadingOperation.allowSceneActivation = true;
+            loading.allowSceneActivation = true;
 
-            await WaitUntilAsync(() => loadingOperation.isDone);
+            await WaitUntilAsync(() => loading.isDone);
             if (transition.ScreenFader) await transition.ScreenFader.FadeInAsync();
 
             // LoadingScene is set to null in the LoadSceneAsync finally block.
         }
 
-        private static void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);
+        private static async Awaitable LoadTransitionSceneAsync(string loadingScene)
+        {
+            // Automatically unload the previous Scene.
+            var loadingSceneOperation = UnitySceneManager.LoadSceneAsync(loadingScene, SceneMode.Single);
+            var hasInvalidLoadingScene = loadingSceneOperation == null;
+
+            if (hasInvalidLoadingScene) throw new Exception($"Loading Scene {loadingScene} is invalid.");
+            await loadingSceneOperation;
+        }
+
+        private static async Awaitable<AsyncOperation> LoadSceneAsync(string scene, IProgress<float> progress)
+        {
+            var loading = UnitySceneManager.LoadSceneAsync(scene);
+            var hasInvalidScene = loading == null;
+
+            if (hasInvalidScene) throw new Exception($"Scene {scene} is invalid.");
+
+            // Prevent to automatically unload the LoadingScene if any.
+            loading.allowSceneActivation = false;
+            await loading.WaitUntilActivationProgress(progress);
+
+            return loading;
+        }
 
         private static async Awaitable WaitUntilAsync(Func<bool> condition)
         {
             while (!condition()) await Awaitable.NextFrameAsync();
         }
+
+        private static void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);
     }
 }

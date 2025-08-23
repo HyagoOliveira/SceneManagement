@@ -167,6 +167,8 @@ namespace ActionCode.SceneManagement
 
             await WaitUntilAsync(() => loadingOperation.isDone);
             if (transition.ScreenFader) await transition.ScreenFader.FadeInAsync();
+
+            // LoadingScene is set to null in the LoadSceneAsync finally block.
         }
 
         private static void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);

@@ -5,6 +5,7 @@
 * Current version: **5.0.0**
 * License: **MIT**
 * Dependencies:
+    - [com.actioncode.awaitable-system : 1.0.0](https://github.com/HyagoOliveira/AwaitableSystem/tree/1.0.0)
     - [com.actioncode.attributes : 3.1.0](https://github.com/HyagoOliveira/Attributes/tree/3.1.0)
 
 ## Summary

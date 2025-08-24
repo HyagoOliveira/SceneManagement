@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - LoadSceneAsync waits for SceneLoader before fade out
 - SceneLoader Component and Prefab
 - ISceneLoadable interface
+- AwaitableSystem package dependency
 
 ### Fixed
 - LoadScene null exception when the game is exited from loading scene

@@ -22,6 +22,7 @@
     "email": "hyagogow@gmail.com"
   },
   "dependencies": {
+    "com.actioncode.awaitable-system": "1.0.0",
     "com.actioncode.attributes": "3.1.0"
   }
 }

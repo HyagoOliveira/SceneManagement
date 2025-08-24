@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [5.1.0] - 2025-08-24
 ### Added
 - LoadSceneAsync waits for SceneLoader before fade out
 - SceneLoader Component and Prefab
@@ -126,8 +128,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - README
 - Initial commit
 
-[Unreleased]: https://github.com/HyagoOliveira/SceneManagement/compare/5.0.0...main
-[5.0.0]: https://github.com/HyagoOliveira/SceneManagement/tree/4.3.0/
+[Unreleased]: https://github.com/HyagoOliveira/SceneManagement/compare/5.1.0...main
+[5.1.0]: https://github.com/HyagoOliveira/SceneManagement/tree/5.1.0/
+[5.0.0]: https://github.com/HyagoOliveira/SceneManagement/tree/5.0.0/
 [4.3.0]: https://github.com/HyagoOliveira/SceneManagement/tree/4.3.0/
 [4.2.0]: https://github.com/HyagoOliveira/SceneManagement/tree/4.2.0/
 [4.1.0]: https://github.com/HyagoOliveira/SceneManagement/tree/4.1.0/

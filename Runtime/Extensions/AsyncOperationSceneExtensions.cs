@@ -13,7 +13,7 @@ namespace ActionCode.SceneManagement
         /// </summary>
         /// <param name="progress">An implementation to report progress.</param>
         /// <param name="additionalProgress">Additional progress to report.</param>
-        /// <returns>An enumerator that will wait until the operation reaches its activation progress.</returns>
+        /// <returns>An asynchronously operation that will wait until the operation reaches its activation progress.</returns>
         public static async Awaitable WaitUntilActivationProgress(this AsyncOperation operation, IProgress<float> progress = null, float additionalProgress = 0F)
         {
             // The real loading progress will be between 0F to 0.9F until the new scene is activated.

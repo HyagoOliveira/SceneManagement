@@ -1,5 +1,6 @@
 #if ANIMATION_MODULE
 using UnityEngine;
+using ActionCode.AwaitableSystem;
 
 namespace ActionCode.SceneManagement
 {
@@ -28,18 +29,13 @@ namespace ActionCode.SceneManagement
         public override async Awaitable FadeInAsync()
         {
             animation.Play(fadeInName);
-            await WaitWhilePlayingAsync(animation);
+            await AwaitableUtility.WaitWhilePlayingAsync(animation);
         }
 
         public override async Awaitable FadeOutAsync()
         {
             animation.Play(fadeOutName);
-            await WaitWhilePlayingAsync(animation);
-        }
-
-        private static async Awaitable WaitWhilePlayingAsync(Animation animation)
-        {
-            while (animation.isPlaying) await Awaitable.NextFrameAsync();
+            await AwaitableUtility.WaitWhilePlayingAsync(animation);
         }
     }
 }

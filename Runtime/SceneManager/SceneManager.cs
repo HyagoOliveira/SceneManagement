@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using ActionCode.AwaitableSystem;
 using SceneMode = UnityEngine.SceneManagement.LoadSceneMode;
 using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
@@ -140,14 +141,14 @@ namespace ActionCode.SceneManagement
             progress.Report(1F);
 
             await Awaitable.WaitForSecondsAsync(transition.TimeAfterLoading);
-            await WaitUntilAsync(() => !IsLoadingLocked); // Game custom lock.
+            await AwaitableUtility.WaitWhileAsync(() => IsLoadingLocked); // Game custom lock.
 
             var canFadeOut = hasLoadingScene && transition.ScreenFader;
             if (canFadeOut) await transition.ScreenFader.FadeOutAsync();
 
             // Automatically unload the LoadingScene if any.
             loading.allowSceneActivation = true;
-            await WaitUntilAsync(() => loading.isDone);
+            await AwaitableUtility.WaitUntilAsync(() => loading.isDone);
             await WaitForSceneLoader();
             if (transition.ScreenFader) await transition.ScreenFader.FadeInAsync();
 
@@ -176,11 +177,6 @@ namespace ActionCode.SceneManagement
             await loading.WaitUntilActivationProgress(progress);
 
             return loading;
-        }
-
-        private static async Awaitable WaitUntilAsync(Func<bool> condition)
-        {
-            while (!condition()) await Awaitable.NextFrameAsync();
         }
 
         private static async Awaitable WaitForSceneLoader()

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using ActionCode.AwaitableSystem;
 
 namespace ActionCode.SceneManagement
 {
@@ -38,17 +39,9 @@ namespace ActionCode.SceneManagement
         public override async Awaitable FadeInAsync() => await FadeScreenAsync(FADE_OUT_ALPHA, FADE_IN_ALPHA);
         public override async Awaitable FadeOutAsync() => await FadeScreenAsync(FADE_IN_ALPHA, FADE_OUT_ALPHA);
 
-        private async Awaitable FadeScreenAsync(float startAlpha, float finalAlpha)
-        {
-            var currentFadeTime = 0F;
-            while (currentFadeTime < duration)
-            {
-                var interpolation = currentFadeTime / duration;
-                canvasGroup.alpha = Mathf.Lerp(startAlpha, finalAlpha, interpolation);
-                currentFadeTime += Time.deltaTime;
-                await Awaitable.NextFrameAsync();
-            }
-            canvasGroup.alpha = finalAlpha;
-        }
+        private async Awaitable FadeScreenAsync(float startAlpha, float finalAlpha) =>
+            await AwaitableUtility.LerpAsync(startAlpha, finalAlpha, duration, UpdateCanvasAlpha);
+
+        private void UpdateCanvasAlpha(float alpha) => canvasGroup.alpha = alpha;
     }
 }

@@ -101,6 +101,73 @@ A [SceneTransitionBuilder](/Editor/Build/SceneTransitionBuilder.cs) *Pre Build P
 
 The SceneManager has **OnLoadingStarted**, **OnLoadingFinished** and **OnProgressChanged** events, invoked at the specific loading time. Use them in your game to execute actions before or after the Scene is loaded.
 
+### Loading Game Objects
+
+You can load and/or execute asynchronously code when a Scene is finishing to load by implementing the [ISceneLoadable](/Runtime/SceneManager/Loader/ISceneLoadable.cs) interface.
+
+Suppose you want to load some Addressables Prefabs and, after they all are load into your Gameplay Scene, you need to update the NavMesh Surface so your AI Agents can walk around correctlly.
+
+First, create a Loader class implementing the `ISceneLoadable` interface:
+
+```csharp
+using UnityEngine;
+using System.Threading.Tasks;
+using ActionCode.SceneManagement;
+using UnityEngine.AddressableAssets; // Make sure you have the Unity.Addressables package installed
+
+namespace YourCompany.YourGame.YourSystem
+{
+    [DisallowMultipleComponent]
+    public sealed class PrefabLoader : MonoBehaviour, ISceneLoadable
+    {
+        [SerializeField] private AssetReferenceGameObject prefab;
+
+        public uint SortOrder => 0;
+        public bool IsLoaded => instance != null;
+
+        private GameObject instance;
+
+        public async Task LoadAsync() => instance = await Addressables.InstantiateAsync(prefab, transform).Task;
+    }
+}
+```
+Attach and set this component inside as many GameObjects you need on your Gameplay Scene.
+
+Next, create another `ISceneLoadable` implementation to update your NavMesh Surface:
+
+```csharp
+using UnityEngine;
+using Unity.AI.Navigation; // Make sure you have the Unity.AI.Navigation package installed
+using System.Threading.Tasks;
+using ActionCode.SceneManagement;
+
+namespace YourCompany.YourGame.YourSystem
+{
+    [DisallowMultipleComponent]
+    public sealed class NavMeshSurfaceUpdater : MonoBehaviour, ISceneLoadable
+    {
+        [SerializeField] private NavMeshSurface surface;
+
+        public uint SortOrder => 1;
+        public bool IsLoaded { get; private set; }
+
+        public async Task LoadAsync()
+        {
+            IsLoaded = false;
+            await surface.UpdateNavMesh(surface.navMeshData);
+            IsLoaded = true;
+        }
+    }
+}
+```
+**Attention**: make sure the SortOrder from your `NavMeshSurfaceUpdater` is greater than `PrefabLoader`. This will make the `NavMeshSurfaceUpdater.LoadAsync()` executes after the `PrefabLoader.LoadAsync()`.
+
+Finally, place the [SceneLoader](/Prefabs/SceneLoader.prefab) prefab inside your Gameplay Scene. This will execute your `ISceneLoadable` implementations using theys SortOrder.
+
+Again, do not forget to put all of those prefabs into your Gameplay Scene, **not into your Loading Scene**.
+
+Using this approach, your `ISceneLoadable` implementations will run after the last screen fades in when entering from the Loading Scene. The code will run normally if you play directlly from your Gameplay Scene as well.
+
 ## Installation
 
 ### Using the Package Registry Server

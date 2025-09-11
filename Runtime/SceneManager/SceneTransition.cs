@@ -1,4 +1,5 @@
 using UnityEngine;
+using ActionCode.ScreenFadeSystem;
 
 namespace ActionCode.SceneManagement
 {
@@ -40,7 +41,7 @@ namespace ActionCode.SceneManagement
         internal void Initialize()
         {
             var hasInvalidFader = ScreenFader == null;
-            if (hasInvalidFader) ScreenFader = ScreenFaderPool.Create(screenFaderPrefab);
+            if (hasInvalidFader) ScreenFader = ScreenFadeFactory.Create(screenFaderPrefab);
         }
 
         /// <summary>

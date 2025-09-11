@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Screen Fade System dependency
 
 ### Changed
+- Move Screen Fade code/prefabs into Screen Fade System package
 
 ## [5.1.0] - 2025-08-24
 ### Added

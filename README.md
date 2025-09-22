@@ -42,16 +42,11 @@ You can also use the [DefaultSceneTransition](/Transitions/DefaultSceneTransitio
 
 ### Using Screen Faders
 
-SceneTransition assets have an attribute for a **Screen Fader Prefab**. This prefab must have a component implementing the [AbstractScreenFader](/Runtime/ScreenFaders/AbstractScreenFader.cs) component.
+Screen Fade uses the [Screen Fade System](https://github.com/HyagoOliveira/ScreenFadeSystem) package.
 
-This package already provides two components implementing this component:
+SceneTransition assets have an attribute for a **Screen Fader Prefab**. This prefab must have a component implementing the [AbstractScreenFader](https://github.com/HyagoOliveira/ScreenFadeSystem/blob/main/Runtime/AbstractScreenFader.cs) component.
 
-1. [AnimationScreenFader](/Runtime/ScreenFaders/AnimationScreenFader.cs): fades the screen in and out using a local ```Animation``` component. Perfect to use when fading using animations.
-2. [CanvasScreenFader](/Runtime/ScreenFaders/CanvasScreenFader.cs): fades the screen in and out using a local ```CanvasGroup``` component. Use this script and set the attributes to choose how to fade a ```Canvas```.
-
-If those components do not meet your specifications, please feel free to create your own fade component and perhaps contribute to the package. :)
-
-Also, there are two prefabs created using those components at the [Prefabs](/Prefabs/ScreenFaders/) folder. You can use those prefabs or create new variants of them.
+You can use one provided by the package or create your own. Use the [package documentation](https://github.com/HyagoOliveira/ScreenFadeSystem?tab=readme-ov-file#how-to-use) to know how.
 
 ### Loading new Scenes by Code
 

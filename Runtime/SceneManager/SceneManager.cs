@@ -148,8 +148,10 @@ namespace ActionCode.SceneManagement
 
             // Automatically unload the LoadingScene if any.
             loading.allowSceneActivation = true;
+
             await AwaitableUtility.WaitUntilAsync(() => loading.isDone);
-            await WaitForSceneLoader();
+            await WaitForAllLoaders();
+
             if (transition.ScreenFader) await transition.ScreenFader.FadeInAsync();
 
             // LoadingScene is set to null in the LoadSceneAsync finally block.
@@ -179,12 +181,13 @@ namespace ActionCode.SceneManagement
             return loading;
         }
 
-        private static async Awaitable WaitForSceneLoader()
+        private static async Awaitable WaitForAllLoaders()
         {
-            var loader = UnityEngine.Object.FindAnyObjectByType<SceneLoader>();
-            if (loader == null) return;
-
-            while (!loader.IsLoaded) await Awaitable.NextFrameAsync();
+            var loaders = UnityEngine.Object.FindObjectsByType<AbstractLoader>(sortMode: FindObjectsSortMode.InstanceID);
+            foreach (var loader in loaders)
+            {
+                await loader.LoadAsync();
+            }
         }
 
         private static void ReportProgress(float progress) => OnProgressChanged?.Invoke(progress * 100F);

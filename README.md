@@ -94,7 +94,7 @@ If you want to lock the next scene activation until an action is done, i.e., wai
 
 The SceneManager has **OnLoadingStarted**, **OnLoadingFinished** and **OnProgressChanged** events, invoked at the specific loading time. Use them in your game to execute actions before or after the Scene is loaded.
 
-### Loading Game Objects
+### Running Loader Code
 
 You can execute any asynchronous operation when a Scene is finishing to load by implementing the [AbstractLoader](/Runtime/SceneManager/AbstractLoader.cs) abstract component.
 

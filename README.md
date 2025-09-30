@@ -90,80 +90,51 @@ Inside your Loading Scene, you can use the [LoadingSlider](/Runtime/UI/LoadingSl
 
 If you want to lock the next scene activation until an action is done, i.e., wait for an input or animation to be completely played inside your Loading Scene, you can use the ```SceneManager.LockLoading()``` function to do that. Don't forget to use ```SceneManager.UnlockLoading()``` to unlock the Loading Process.
 
-### Build Processor
-
-A [SceneTransitionBuilder](/Editor/Build/SceneTransitionBuilder.cs) *Pre Build Processor* was created to check if the **Loading Scene** from all SceneTransition assets has been added to the **Build Settings**. This make sure that you will never waste your time building your game to realize that you forget to add the Loading Scene to the build.
-
 ### Scene Loading Events
 
 The SceneManager has **OnLoadingStarted**, **OnLoadingFinished** and **OnProgressChanged** events, invoked at the specific loading time. Use them in your game to execute actions before or after the Scene is loaded.
 
 ### Loading Game Objects
 
-You can load and/or execute asynchronously code when a Scene is finishing to load by implementing the [ISceneLoadable](/Runtime/SceneManager/Loader/ISceneLoadable.cs) interface.
+You can execute any asynchronous operation when a Scene is finishing to load by implementing the [AbstractLoader](/Runtime/SceneManager/AbstractLoader.cs) abstract component.
 
 Suppose you want to load some Addressables Prefabs and, after they all are load into your Gameplay Scene, you need to update the NavMesh Surface so your AI Agents can walk around correctlly.
 
-First, create a Loader class implementing the `ISceneLoadable` interface:
+First, create a GameLoader implementing the `AbstractLoader` component:
 
 ```csharp
 using UnityEngine;
 using System.Threading.Tasks;
 using ActionCode.SceneManagement;
+using Unity.AI.Navigation; // Make sure you have the Unity.AI.Navigation package installed
 using UnityEngine.AddressableAssets; // Make sure you have the Unity.Addressables package installed
 
 namespace YourCompany.YourGame.YourSystem
 {
     [DisallowMultipleComponent]
-    public sealed class PrefabLoader : MonoBehaviour, ISceneLoadable
-    {
-        [SerializeField] private AssetReferenceGameObject prefab;
-
-        public uint SortOrder => 0;
-        public bool IsLoaded => instance != null;
-
-        private GameObject instance;
-
-        public async Task LoadAsync() => instance = await Addressables.InstantiateAsync(prefab, transform).Task;
-    }
-}
-```
-Attach and set this component inside as many GameObjects you need on your Gameplay Scene.
-
-Next, create another `ISceneLoadable` implementation to update your NavMesh Surface:
-
-```csharp
-using UnityEngine;
-using Unity.AI.Navigation; // Make sure you have the Unity.AI.Navigation package installed
-using System.Threading.Tasks;
-using ActionCode.SceneManagement;
-
-namespace YourCompany.YourGame.YourSystem
-{
-    [DisallowMultipleComponent]
-    public sealed class NavMeshSurfaceUpdater : MonoBehaviour, ISceneLoadable
+    public sealed class GameLoader : AbstractLoader
     {
         [SerializeField] private NavMeshSurface surface;
+        [SerializeField] private AssetReferenceGameObject prefab;
 
-        public uint SortOrder => 1;
-        public bool IsLoaded { get; private set; }
-
-        public async Task LoadAsync()
+        protected override async Awaitable LoadAsync() 
         {
-            IsLoaded = false;
-            await surface.UpdateNavMesh(surface.navMeshData);
-            IsLoaded = true;
+            var instance = await Addressables.InstantiateAsync(prefab).Task;
+            // Load any other prefab instance here.
+
+            await surface.UpdateNavMesh(surface.navMeshData); // Update the Navemesh Surface
         }
     }
 }
 ```
-**Attention**: make sure the SortOrder from your `NavMeshSurfaceUpdater` is greater than `PrefabLoader`. This will make the `NavMeshSurfaceUpdater.LoadAsync()` executes after the `PrefabLoader.LoadAsync()`.
 
-Finally, place the [SceneLoader](/Prefabs/SceneLoader.prefab) prefab inside your Gameplay Scene. This will execute your `ISceneLoadable` implementations using theys SortOrder.
+Attach this component inside a GameObject on your destination Scene, **not into your Loading Scene**. 
 
-Again, do not forget to put all of those prefabs into your Gameplay Scene, **not into your Loading Scene**.
+Your GameLoader will run after the last screen fades in, exiting the Loading Scene. The code will run normally if you play directly from your destination Scene as well.
 
-Using this approach, your `ISceneLoadable` implementations will run after the last screen fades in when entering from the Loading Scene. The code will run normally if you play directlly from your Gameplay Scene as well.
+### Build Processor
+
+A [SceneTransitionBuilder](/Editor/Build/SceneTransitionBuilder.cs) *Pre Build Processor* was created to check if the **Loading Scene** from all SceneTransition assets has been added to the **Build Settings**. This make sure that you will never waste your time building your game to realize that you forget to add the Loading Scene to the build.
 
 ## Installation
 

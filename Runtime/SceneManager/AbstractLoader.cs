@@ -17,12 +17,34 @@ namespace ActionCode.SceneManagement
     [DefaultExecutionOrder(-1)]
     public abstract class AbstractLoader : MonoBehaviour
     {
-        protected virtual void Awake() => _ = LoadAsync();
+        public bool IsLoaded { get; private set; }
+
+        protected virtual void Awake() => Load();
+
+        /// <summary>
+        /// Loads the remain Scene content.
+        /// </summary>
+        public async void Load()
+        {
+            try
+            {
+                IsLoaded = false;
+                await LoadAsync();
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogException(e);
+            }
+            finally
+            {
+                IsLoaded = true;
+            }
+        }
 
         /// <summary>
         /// Loads the remain Scene content asynchronously.
         /// </summary>
         /// <returns>An asynchronously operation.</returns>
-        public abstract Awaitable LoadAsync();
+        protected abstract Awaitable LoadAsync();
     }
 }

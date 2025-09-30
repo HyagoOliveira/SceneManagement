@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 - ISceneLoadable
-- SceneLoader 
+- SceneLoader component and prefab
 
 ## [6.0.0] - 2025-09-22
 ### Added

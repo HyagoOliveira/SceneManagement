@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Changed
+- Increase Unity minimum vertion to 6.0.1
 - Refact SceneLoader into AbstractLoader
 
 ### Removed

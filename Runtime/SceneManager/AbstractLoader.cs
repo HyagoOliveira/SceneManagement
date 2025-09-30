@@ -5,9 +5,8 @@ namespace ActionCode.SceneManagement
     /// <summary>
     /// Abstract loader for scene.
     /// <para>
-    /// Implement this component to execute an asynchronous Loading operation as soon 
-    /// after the new Scene is loaded (and activated) and before the screen fades in 
-    /// (the scene content appears).
+    /// Implement this component to execute any asynchronous operation when a Scene is finishing to load,
+    /// as soon after the new Scene is activated and before the screen fades in (the scene content appears).
     /// </para>
     /// </summary>
     /// <remarks>

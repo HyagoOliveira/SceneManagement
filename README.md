@@ -2,7 +2,7 @@
 
 * Loads new Scenes using Screen Faders and Loading Scenes.
 * Unity minimum version: **6000.1**
-* Current version: **6.0.0**
+* Current version: **7.0.0**
 * License: **MIT**
 * Dependencies:
     - [com.actioncode.awaitable-system : 1.1.0](https://github.com/HyagoOliveira/AwaitableSystem/tree/1.1.0)

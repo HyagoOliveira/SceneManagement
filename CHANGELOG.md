@@ -5,8 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [7.0.0] - 2025-10-01
 ### Changed
-- Increase Unity minimum vertion to 6.0.1
+- Increase Unity minimum version to 6.0.1
 - Refact SceneLoader into AbstractLoader
 
 ### Removed
@@ -145,7 +147,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - README
 - Initial commit
 
-[Unreleased]: https://github.com/HyagoOliveira/SceneManagement/compare/6.0.0...main
+[Unreleased]: https://github.com/HyagoOliveira/SceneManagement/compare/7.0.0...main
+[7.0.0]: https://github.com/HyagoOliveira/SceneManagement/tree/6.0.0/
 [6.0.0]: https://github.com/HyagoOliveira/SceneManagement/tree/6.0.0/
 [5.1.0]: https://github.com/HyagoOliveira/SceneManagement/tree/5.1.0/
 [5.0.0]: https://github.com/HyagoOliveira/SceneManagement/tree/5.0.0/

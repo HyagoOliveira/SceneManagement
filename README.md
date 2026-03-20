@@ -4,10 +4,6 @@
 * Unity minimum version: **6000.1**
 * Current version: **7.0.0**
 * License: **MIT**
-* Dependencies:
-    - [com.actioncode.awaitable-system : 1.1.0](https://github.com/HyagoOliveira/AwaitableSystem/tree/1.1.0)
-    - [com.actioncode.attributes : 3.1.0](https://github.com/HyagoOliveira/Attributes/tree/3.1.0)
-    - [com.actioncode.screen-fade-system : 1.0.0](https://github.com/HyagoOliveira/ScreenFadeSystem/tree/1.0.0)
 
 ## Summary
 

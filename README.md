@@ -132,6 +132,16 @@ Your GameLoader will run after the last screen fades in, exiting the Loading Sce
 
 A [SceneTransitionBuilder](/Editor/Build/SceneTransitionBuilder.cs) *Pre Build Processor* was created to check if the **Loading Scene** from all SceneTransition assets has been added to the **Build Settings**. This make sure that you will never waste your time building your game to realize that you forget to add the Loading Scene to the build.
 
+### Open Scenes from Toolbar
+
+You can open any Scene from a Selector Dropdown button in the Editor Toolbar.
+
+Enable it by Right Click in any part of the Toolbar and select <b>Action Code > Scene Selector</b>.
+
+![The Scene Toolbar Dropdown](/Documentation~/scene-toolbar-dropdown.png "The Scene Toolbar Dropdown")
+
+Now you can open any Scene from your game quicklly.
+
 ## Installation
 
 ### Using the Package Registry Server

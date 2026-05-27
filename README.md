@@ -1,8 +1,7 @@
 # Scene Management
 
 * Loads new Scenes using Screen Faders and Loading Scenes.
-* Unity minimum version: **6000.1**
-* Current version: **7.0.0**
+* Unity minimum version: **6000.3**
 * License: **MIT**
 
 ## Summary
@@ -136,7 +135,7 @@ A [SceneTransitionBuilder](/Editor/Build/SceneTransitionBuilder.cs) *Pre Build P
 
 You can open any Scene from a Selector Dropdown button in the Editor Toolbar.
 
-Enable it by Right Click in any part of the Toolbar and select <b>Action Code > Scene Selector</b>.
+Enable it by Right Click in any part of the Toolbar and select <b>Action Code > Scene Selector</b>. You just need to do it once.
 
 ![The Scene Toolbar Dropdown](/Documentation~/scene-toolbar-dropdown.png "The Scene Toolbar Dropdown")
 

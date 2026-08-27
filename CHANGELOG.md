@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - SceneManager Scene Loaded functions
 
+### Changed
+- Update to Unity 6.5
+
 ## [7.1.0] - 2026-05-27
 ### Added
 - Scene Selector Dropdown button in the Editor Toolbar

@@ -197,7 +197,7 @@ namespace ActionCode.SceneManagement
 
         private static async Awaitable WaitForAllLoaders()
         {
-            var loaders = UnityEngine.Object.FindObjectsByType<AbstractLoader>(sortMode: FindObjectsSortMode.InstanceID);
+            var loaders = UnityEngine.Object.FindObjectsByType<AbstractLoader>();
             foreach (var loader in loaders)
             {
                 while (!loader.IsLoaded) await Awaitable.NextFrameAsync();

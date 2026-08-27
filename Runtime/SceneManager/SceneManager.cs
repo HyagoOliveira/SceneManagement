@@ -1,6 +1,6 @@
+using ActionCode.AwaitableSystem;
 using System;
 using UnityEngine;
-using ActionCode.AwaitableSystem;
 using SceneMode = UnityEngine.SceneManagement.LoadSceneMode;
 using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
@@ -49,6 +49,20 @@ namespace ActionCode.SceneManagement
         /// Whether a Scene loading process is happening. 
         /// </summary>
         public static bool IsLoading() => LoadingScene != null;
+
+        /// <summary>
+        /// Checks whether the given scene is loaded.
+        /// </summary>
+        /// <param name="name">The scene name.</param>
+        /// <returns>Whether the scene is loaded.</returns>
+        public static bool IsSceneLoadedUsingName(string name) => UnitySceneManager.GetSceneByName(name).isLoaded;
+
+        /// <summary>
+        /// <inheritdoc cref="IsSceneLoadedUsingName(string)"/>
+        /// </summary>
+        /// <param name="path">The scene path.</param>
+        /// <returns>Whether the scene is loaded.</returns>
+        public static bool IsSceneLoadedUsingPath(string path) => UnitySceneManager.GetSceneByPath(path).isLoaded;
 
         /// <summary>
         /// Locks the Scene loading process.
